@@ -1,0 +1,17 @@
+{
+    "image1": {
+        "data": "hwQIAAgAAAAA8A8AAPAPAADwDwD//////////wDwDwAA8A8AAPAPAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "plus_icon"
+    },
+    "image2": {
+        "data": "hwQIAAgAAAAA8A8AAPAPAADwDwAA8A8AAPAPAADwDwAA8A8AAPAPAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "minus_icon"
+    },
+    "*": {
+        "mimeType": "image/x-mkcd-f4",
+        "dataEncoding": "base64",
+        "namespace": "myImages"
+    }
+}
