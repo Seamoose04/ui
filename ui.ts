@@ -94,6 +94,7 @@ namespace UI {
             this.parent = null
             this.position = position
             this.size = size
+            this.positionMethod = PositionMethod.CENTER
         }
 
         draw(ctx: Image): void { }
@@ -144,23 +145,25 @@ namespace UI {
         Medium,
         Large
     }
-    export enum TextWrapMode {
-        Wrap,
-        Cut,
-        Continue,
-        Ellipsis
-        // scroll text?
+    export enum TextAlignMode {
+        Left,
+        Center,
+        Right
     }
     export class TextElement extends Element {
         text: string
         color: color
         fontSize: FontSize
+        textAlign: TextAlignMode
         
         constructor(position: Vector2, text: string, color?: color) {
             super(position, Vector2.zero)
             this.color = color ? color : game.Color.Black
             this.fontSize = FontSize.Small
+            this.textAlign = TextAlignMode.Left
             this.setText(text)
+
+            this.setSize(Vector2.multiply(TextElement.textGridSize(this.text), TextElement.sizeOfChar(this.fontSize)))
         }
 
         private get font(): image.Font {
@@ -182,28 +185,28 @@ namespace UI {
 
         private static textGridSize(text: string): Vector2 {
             let rows = text.split("\n")
-            let maxColumns = rows.reduce((max: number, current: string) => {
-                return Math.max(max, current.replace("\n", "").length)
+            let maxRow = rows.reduce((max: number, current: string) => {
+                return Math.max(max, current.length)
             }, 0)
-            return new Vector2(rows.length, maxColumns)
+            return new Vector2(maxRow, rows.length)
         }
 
-        private sizeOfText(text: string): Vector2 {
-            let gridSize = TextElement.textGridSize(text)
-            switch (this.fontSize) {
+        private static sizeOfChar(fontSize: FontSize): Vector2 {
+            let gridSize = Vector2.zero
+            switch (fontSize) {
                 case FontSize.Small: {
-                    gridSize.x *= 5
-                    gridSize.y *= 7
+                    gridSize.x = 6
+                    gridSize.y = 6
                     break
                 }
                 case FontSize.Medium: {
-                    gridSize.x *= 6
-                    gridSize.y *= 10
+                    gridSize.x = 6
+                    gridSize.y = 10
                     break
                 }
                 case FontSize.Large: {
-                    gridSize.x *= 12
-                    gridSize.y *= 14
+                    gridSize.x = 12
+                    gridSize.y = 14
                     break
                 }
             }
@@ -211,9 +214,47 @@ namespace UI {
         }
 
         draw(ctx: Image): void {
+            const textGridSize = TextElement.textGridSize(this.text)
+
+            let offset = this.position.clone()
             switch (this.positionMethod) {
+                case PositionMethod.TOP_LEFT: {
+                    offset.add(Vector2.zero)
+                    break
+                }
                 case PositionMethod.CENTER: {
-                    ctx.print(this.text, 0, 0, this.color, this.font)
+                    offset.add(Vector2.scale(this.size, -1/2))
+                    break
+                }
+            }
+
+            const sizeOfChar = TextElement.sizeOfChar(this.fontSize)
+            const splitText = this.text.split("\n")
+
+            switch (this.textAlign) {
+                case TextAlignMode.Left: {
+                    for (let row = 0; row < textGridSize.y; row++) {
+                        const pos = Vector2.add(offset, new Vector2(0, row * sizeOfChar.y))
+                        ctx.print(splitText[row], pos.x, pos.y, this.color, this.font)
+                    }
+                    break
+                }
+                case TextAlignMode.Center: {
+                    let width = textGridSize.x * sizeOfChar.x
+                    for (let row = 0; row < textGridSize.y; row++) {
+                        const rowWidth = splitText[row].length * sizeOfChar.x
+                        const pos = Vector2.add(offset, new Vector2((width-rowWidth) / 2, row * sizeOfChar.y))
+                        ctx.print(splitText[row], pos.x, pos.y, this.color, this.font)
+                    }
+                    break
+                }
+                case TextAlignMode.Right: {
+                    let width = textGridSize.x * sizeOfChar.x
+                    for (let row = 0; row < textGridSize.y; row++) {
+                        const rowWidth = splitText[row].length * sizeOfChar.x
+                        const pos = Vector2.add(offset, new Vector2(width - rowWidth, row * sizeOfChar.y))
+                        ctx.print(splitText[row], pos.x, pos.y, this.color, this.font)
+                    }
                     break
                 }
             }
@@ -221,12 +262,33 @@ namespace UI {
 
         setText(text: string): TextElement {
             this.text = text
-            this.setSize(this.sizeOfText(this.text))
+            this.setSize(Vector2.multiply(TextElement.textGridSize(this.text), TextElement.sizeOfChar(this.fontSize)))
             return this
         }
 
         setTextSize(size: FontSize): TextElement {
             this.fontSize = size
+            this.setSize(Vector2.multiply(TextElement.textGridSize(this.text), TextElement.sizeOfChar(this.fontSize)))
+            return this
+        }
+
+        setTextAlignMode(mode: TextAlignMode): TextElement {
+            this.textAlign = mode
+            return this
+        }
+
+        setPosition(position: Vector2): TextElement {
+            super.setPosition(position)
+            return this
+        }
+
+        setPositionMethod(method: PositionMethod): TextElement {
+            super.setPositionMethod(method)
+            return this
+        }
+
+        setSize(size: Vector2): TextElement {
+            super.setSize(size)
             return this
         }
     }

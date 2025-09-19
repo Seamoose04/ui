@@ -1,11 +1,11 @@
 // tests go here; this will not be compiled when this package is used as an extension.
-let d = new UI.Display()
+const d = new UI.Display()
 
-let vs = new UI.VerticalStack(new Vector2(80, 60))
+const vs = new UI.VerticalStack(new Vector2(80, 60))
     .setPositionMethod(UI.PositionMethod.CENTER)
     .setSpacing(5)
 
-let plus = new UI.DepthStack(Vector2.zero)
+const plus = new UI.DepthStack(Vector2.zero)
     .setPositionMethod(UI.PositionMethod.CENTER)
 new UI.Circle(Vector2.zero, 6)
     .setBorder(true)
@@ -36,7 +36,7 @@ new UI.Circle(Vector2.zero, 6)
 new UI.ImageElement(Vector2.zero, assets.image`plus_icon`)
     .setParent(plus)
 
-let minus = new UI.DepthStack(Vector2.zero)
+const minus = new UI.DepthStack(Vector2.zero)
     .setPositionMethod(UI.PositionMethod.CENTER)
 new UI.Circle(Vector2.zero, 6)
     .setBorder(true)
@@ -58,7 +58,19 @@ vs.setShape(
         .setBorderColor(game.Color.Purple)
         .setBorderWidth(2)
 )
-d.elements.push(vs)
+// d.elements.push(vs)
+
+const ds = new UI.DepthStack(new Vector2(80, 60))
+    .setSpacing(2)
+
+ds.setShape(
+    new UI.RoundedBox(Vector2.zero, ds.size, 5, game.Color.Red)
+)
+new UI.TextElement(Vector2.zero, "Hi there,\nWorld!", game.Color.White)
+    .setTextAlignMode(UI.TextAlignMode.Center)
+    .setParent(ds)
+
+d.elements.push(ds)
 
 browserEvents.MouseLeft.onEvent(browserEvents.MouseButtonEvent.Pressed, function (x: number, y: number) {
     d.clicked(new Vector2(x, y))
