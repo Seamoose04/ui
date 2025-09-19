@@ -23,6 +23,9 @@ namespace UI {
             this.ctx = image.create(screen.width, screen.height)
             this.elements = []
         }
+        static get center(): Vector2 {
+            return new Vector2(scene.screenWidth() / 2, scene.screenHeight() / 2)
+        }
         clear() {
             this.ctx.fill(game.Color.Black)
         }
@@ -38,6 +41,9 @@ namespace UI {
             for (let element of this.elements) {
                 this.clickedOn(element, position)
             }
+        }
+        addElement(element: Element) {
+            this.elements.push(element)
         }
         private clickedOn(element: Element, position: Vector2) {
             if (element instanceof Container) {
@@ -155,14 +161,14 @@ namespace UI {
         color: color
         fontSize: FontSize
         textAlign: TextAlignMode
+        wrap: boolean
         
         constructor(position: Vector2, text: string, color?: color) {
             super(position, Vector2.zero)
             this.color = color ? color : game.Color.Black
-            this.fontSize = FontSize.Small
+            this.fontSize = FontSize.Medium
             this.textAlign = TextAlignMode.Left
             this.setText(text)
-
             this.setSize(Vector2.multiply(TextElement.textGridSize(this.text), TextElement.sizeOfChar(this.fontSize)))
         }
 
@@ -201,7 +207,7 @@ namespace UI {
                 }
                 case FontSize.Medium: {
                     gridSize.x = 6
-                    gridSize.y = 10
+                    gridSize.y = 8
                     break
                 }
                 case FontSize.Large: {
@@ -274,6 +280,20 @@ namespace UI {
 
         setTextAlignMode(mode: TextAlignMode): TextElement {
             this.textAlign = mode
+            return this
+        }
+
+        setWidth(width: number): TextElement {
+            let lines: string[] = []
+            let lastLine = this.text.split(" ").reduce((currentLine, word) => {
+                if (currentLine.concat(word).length * TextElement.sizeOfChar(this.fontSize).x <= width) {
+                    return currentLine.concat(` ${word}`)
+                } else {
+                    lines.push(currentLine)
+                    return word
+                }
+            }, "")
+            this.setText(lines.join("\n").concat("\n").concat(lastLine))
             return this
         }
 
@@ -433,11 +453,16 @@ namespace UI {
         }
 
         setBorderColor(color: color): Box {
+            this.setBorder(true)
+            if (this.borderWidth <= 0) {
+                this.setBorderWidth(1)
+            }
             this.borderColor = color
             return this
         }
 
         setBorderWidth(width: number): Box {
+            this.setBorder(true)
             this.borderWidth = width
             return this
         }
@@ -546,11 +571,16 @@ namespace UI {
         }
 
         setBorderColor(color: color): Circle {
+            this.setBorder(true)
+            if (this.borderWidth <= 0) {
+                this.setBorderWidth(1)
+            }
             this.borderColor = color
             return this
         }
 
         setBorderWidth(width: number): Circle {
+            this.setBorder(true)
             this.borderWidth = width
             return this
         }
@@ -687,11 +717,16 @@ namespace UI {
         }
 
         setBorderColor(color: color): RoundedBox {
+            this.setBorder(true)
+            if (this.borderWidth <= 0) {
+                this.setBorderWidth(1)
+            }
             this.borderColor = color
             return this
         }
 
         setBorderWidth(width: number): RoundedBox {
+            this.setBorder(true)
             this.borderWidth = width
             return this
         }
@@ -894,33 +929,38 @@ namespace UI {
                                 break
                             }
                             case AlignmentMethodV.CENTER: {
-                                child.setPosition(new Vector2(this.position.x + offset, this.position.y + (this.size.y - child.size.y) / 2))
+                                child.setPosition(new Vector2(this.position.x + offset, this.position.y - (this.size.y - child.size.y) / 2))
                                 break
                             }
                         }
-                        offset += child.size.y
+                        offset += child.size.x
                         offset += this.spacing
                     }
                     break
                 }
                 case PositionMethod.CENTER: {
-                    let offset = -this.size.y / 2 + this.spacing
+                    let offset = this.spacing
                     for (let child of this.children) {
                         switch (this.alignmentMethod) {
                             case AlignmentMethodV.TOP: {
-                                child.setPosition(new Vector2(this.position.x - (this.size.x - child.size.x) / 2, this.position.y + offset + child.size.y / 2))
+                                child.setPosition(
+                                    new Vector2(this.position.x + offset - (this.size.x - child.size.x) / 2,
+                                    this.position.y + child.size.y / 2 - this.size.y / 2)
+                                )
                                 break
                             }
                             case AlignmentMethodV.BOTTOM: {
-                                child.setPosition(new Vector2(this.position.x + (this.size.x - child.size.x) / 2, this.position.y + offset + child.size.y / 2))
+                                child.setPosition(
+                                    new Vector2(this.position.x + offset - (this.size.x - child.size.x) / 2,
+                                    this.position.y - child.size.y / 2 + this.size.y / 2))
                                 break
                             }
                             case AlignmentMethodV.CENTER: {
-                                child.setPosition(new Vector2(this.position.x, this.position.y + offset + child.size.y / 2))
+                                child.setPosition(new Vector2(this.position.x + offset - (this.size.x - child.size.x) / 2, this.position.y))
                                 break
                             }
                         }
-                        offset += child.size.y
+                        offset += child.size.x
                         offset += this.spacing
                     }
                     break

@@ -25,6 +25,25 @@ f f f f f f f f
 . . . . . . . . 
 . . . . . . . . 
 `;
+            case "image3":
+            case "star":return img`
+. . . . . . . a a . . . . . . . 
+. . . . . . a a a a . . . . . . 
+. . . . . . a a a a . . . . . . 
+. . . . . . a a a a . . . . . . 
+. . . . . . a a a a . . . . . . 
+a a a a a a a a a a a a a a a a 
+a a a a a a a a a a a a a a a a 
+. a a a a a a a a a a a a a a . 
+. . a a a a a a a a a a a a . . 
+. . . . a a a a a a a a . . . . 
+. . . . a a a a a a a a . . . . 
+. . . . a a a a a a a a . . . . 
+. . . a a a a a a a a a a . . . 
+. . . a a a a . . a a a a . . . 
+. . . a a a . . . . a a a . . . 
+. . . a a . . . . . . a a . . . 
+`;
         }
         return null;
     })
