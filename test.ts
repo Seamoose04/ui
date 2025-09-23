@@ -177,122 +177,30 @@ const d = new UI.Display()
 
 // --------------------------------
 
-const shopContainer = new UI.VerticalStack(
-    UI.Display.center
-).setShape(
-    new UI.RoundedBox(
-        Vector2.zero,
-        Vector2.zero,
-        10, game.Color.LightBlue
-    ).setBorderColor(
-        game.Color.Blue
-    ).setBorderWidth(
-        2
+const shop = new UI.HorizontalStack()
+shop.addChild(
+    new UI.ContainedElement(
+        new UI.Circle(5, game.Color.Red)
+    ).setPadding(
+        3
     )
 )
-
-interface upgrade {
-    name: string,
-    icon: Image,
-    description: string,
-    price: number
-}
-
-const upgrades: upgrade[] = [
-    {
-        name: "Clicker",
-        icon: assets.image`IconClicker`,
-        description: "makes a click worth more",
-        price: 10
-    },
-    {
-        name: "Grandma",
-        icon: assets.image`IconGrandma`,
-        description: "produces 0.1 cookies/s",
-        price: 5
-    },
-    {
-        name: "Bakery",
-        icon: assets.image`IconBakery`,
-        description: "produces 1 cookie/s",
-        price: 20
-    }
-]
-
-for (let up of upgrades) {
-    shopContainer.addChild(
-        new UI.HorizontalStack(
-            Vector2.zero
-        ).setShape(
-            new UI.RoundedBox(
-                Vector2.zero,
-                Vector2.zero,
-                5    
-            )
-        ).setSpacing(
-            2
-        ).addChild(
-            new UI.VerticalStack(
-                Vector2.zero
-            ).addChild(
-                new UI.TextElement(
-                    Vector2.zero,
-                    up.name
-                )
-            ).addChild(
-                new UI.TextElement(
-                    Vector2.zero,
-                    up.description
-                ).setTextSize(
-                    UI.FontSize.Small
-                ).setWidth(
-                    80
-                )
-            )
-        ).addChild(
-            new UI.VerticalStack(
-                Vector2.zero
-            )
-            .setSpacing(
-                2
-            ).setShape(
-                new UI.Box(
-                    Vector2.zero,
-                    Vector2.zero,
-                    game.Color.Brown
-                )
-            ).addChild(
-                new UI.DepthStack(
-                    Vector2.zero
-                ).addChild(
-                    new UI.ImageElement(
-                        Vector2.zero,
-                        up.icon
-                    )
-                ).setShape(
-                    new UI.RoundedBox(
-                        Vector2.zero,
-                        Vector2.zero,
-                        5
-                    ).setColor(
-                        game.Color.White
-                    ).setBorderColor(
-                        game.Color.Tan
-                    )
-                ).setSpacing(
-                    2
-                )
-            ).addChild(
-                new UI.TextElement(
-                    Vector2.zero,
-                    "$".concat(up.price.toString())
-                )
-            )
-        )
+shop.addChild(
+    new UI.ContainedElement(
+        new UI.Circle(10, game.Color.Red)
+    ).setPadding(
+        3
+    ).setPadBottom(
+        10
     )
-}
+)
+shop.setPosition(UI.Display.center)
 
-d.addElement(shopContainer)
+shop.setShape(
+    new UI.Box(Vector2.zero, game.Color.LightBlue)
+)
+
+d.addElement(shop)
 
 browserEvents.MouseLeft.onEvent(browserEvents.MouseButtonEvent.Pressed, function (x: number, y: number) {
     d.clicked(new Vector2(x, y))

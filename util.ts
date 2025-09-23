@@ -44,3 +44,39 @@ class Vector2 {
         return new Vector2(this.x, this.y)
     }
 }
+
+class Dict<K, V> {
+    keys: K[]
+    values: V[]
+    constructor() {
+        this.keys = []
+        this.values = []
+    }
+
+    get(key: K): V | null {
+        const idx = this.keys.indexOf(key)
+        if (idx >= 0) {
+            return this.values[idx]
+        } else {
+            return null
+        }
+    }
+
+    set(key: K, value: V): void {
+        const idx = this.keys.indexOf(key)
+        if (idx >= 0) {
+            this.values[idx] = value
+        } else {
+            this.keys.push(key)
+            this.values.push(value)
+        }
+    }
+
+    remove(key: K): void {
+        const idx = this.keys.indexOf(key)
+        if (idx >= 0) {
+            this.keys.removeAt(idx)
+            this.values.removeAt(idx)
+        }
+    }
+}
