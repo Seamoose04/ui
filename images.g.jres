@@ -14,6 +14,21 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "star"
     },
+    "image4": {
+        "data": "hwQKAAoAAAAAAAAAAAAAAP////8AAAAAHxER8QAAAADwERHxDwAAAAAfERHxAAAAAPAREfEAAAAAAB/xDwAAAAAA8PEAAAAAAAAA/wAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "IconClicker"
+    },
+    "image5": {
+        "data": "hwQKAAoAAAAA4O7uAAAAAADe3d3dAAAA4N3d3d0AAADg3d/93QAAAODd3d3fAAAA4N3d3d8AAADg3d/93QAAAODd3d3dAAAAAN7d3d0AAAAA4O7uAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "IconGrandma"
+    },
+    "image6": {
+        "data": "hwQKAAoAAAAAAAAAAAAAAAAAZmZmAAAAAAD2ZWYAAAAAAGZmZgAAAAAA9mX/AAAAAABmZv8AAAAAZvZlZgAAAGBm9mVmAAAAAABmZmYAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "IconBakery"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

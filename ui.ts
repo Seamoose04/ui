@@ -287,7 +287,7 @@ namespace UI {
             let lines: string[] = []
             let lastLine = this.text.split(" ").reduce((currentLine, word) => {
                 if (currentLine.concat(word).length * TextElement.sizeOfChar(this.fontSize).x <= width) {
-                    return currentLine.concat(` ${word}`)
+                    return currentLine.concat(`${word} `)
                 } else {
                     lines.push(currentLine)
                     return word
