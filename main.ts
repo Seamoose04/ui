@@ -37,6 +37,11 @@ namespace UI {
         element.setPosition(Display.center)
     }
 
+    //% block
+    export function PositionElement(element: Element, x: number, y: number) {
+        element.setPosition(new Vector2(x, y))
+    }
+
     game.onUpdate(() => {
         if (display != null) {
             display.clear()
