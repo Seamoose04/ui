@@ -48,7 +48,7 @@ namespace UI {
     export function AddToContainer(element: Element, container: Container) {
         const contained = new ContainedElement(element)
         container.addChild(contained)
-        return contained
+        // return contained
     }
 
     //% block
