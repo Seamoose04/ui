@@ -109,6 +109,8 @@ const d = new UI.Display()
 
 // d.addElement(shapeHolder)
 
+// -----------------------
+
 // const shop = new UI.DepthStack(new Vector2(80, 60))
 //     .setSpacing(2)
 //     .setShape(
@@ -177,28 +179,73 @@ const d = new UI.Display()
 
 // --------------------------------
 
-const shop = new UI.HorizontalStack()
-shop.addChild(
-    new UI.ContainedElement(
-        new UI.Circle(5, game.Color.Red)
-    ).setPadding(
-        3
-    )
-)
-shop.addChild(
-    new UI.ContainedElement(
-        new UI.Circle(10, game.Color.Red)
-    ).setPadding(
-        3
-    ).setPadBottom(
-        10
-    )
-)
-shop.setPosition(UI.Display.center)
+// const shop = new UI.HorizontalStack()
+// shop.addChild(
+//     new UI.ContainedElement(
+//         new UI.Circle(5, game.Color.Red)
+//     ).setPadding(
+//         3
+//     )
+// )
+// shop.addChild(
+//     new UI.ContainedElement(
+//         new UI.Circle(10, game.Color.Red)
+//     ).setPadding(
+//         3
+//     ).setPadBottom(
+//         10
+//     )
+// )
+// shop.setPosition(UI.Display.center)
 
-shop.setShape(
-    new UI.Box(Vector2.zero, game.Color.LightBlue)
-)
+// shop.setShape(
+//     new UI.Box(Vector2.zero, game.Color.LightBlue)
+// )
+
+// d.addElement(shop)
+
+// -------------------------------
+
+const shop = new UI.DepthStack().setShape(
+        new UI.RoundedBox(
+            Vector2.zero, 8, game.Color.Teal
+        ).setBorderColor(
+            game.Color.LightBlue
+        ).setBorderWidth(
+            2
+        )
+    )
+
+shop.setPosition(new Vector2(80, 60))
+shop.addChild(new UI.ContainedElement(
+    new UI.VerticalStack()
+        .addChild(new UI.ContainedElement(
+            new UI.DepthStack()
+                .addChild(new UI.ContainedElement(
+                    new UI.HorizontalStack()
+                        .addChild(new UI.ContainedElement(
+                            new UI.TextElement(
+                                "Ninja Star: "
+                            ).setTextAlignMode(UI.TextAlignMode.Center)
+                        ))
+                        .addChild(new UI.ContainedElement(
+                            new UI.ImageElement(assets.image`star`)
+                        ))
+                ))
+                .setShape(
+                    new UI.RoundedBox(Vector2.zero, 5, game.Color.LightBlue)
+                )
+        ))
+        .addChild(new UI.ContainedElement(
+            new UI.TextElement(
+                "  This ninja star belonged to the ancient senseis... Who used their power to defeat the evil guys, or something...",
+            ).setWidth(
+                100
+            ).setTextSize(
+                UI.FontSize.Small
+            )
+        ))
+))
 
 d.addElement(shop)
 
