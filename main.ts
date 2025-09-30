@@ -45,7 +45,7 @@ namespace UI {
     export type Element = Clickable | Container
 
     //% block
-    export function AddToContainer(element: Element, container: Container): ContainedElement {
+    export function AddToContainer(element: Element, container: Container) {
         const contained = new ContainedElement(element)
         container.addChild(contained)
         return contained
