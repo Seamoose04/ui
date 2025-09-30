@@ -1,9 +1,4 @@
 namespace UI {
-    export enum PositionMethod {
-        CENTER,
-        TOP_LEFT
-    }
-
     export enum AlignmentMethodH {
         CENTER,
         LEFT,
@@ -49,7 +44,7 @@ namespace UI {
             if (element instanceof Container) {
                 let container = element as Container
                 for (let child of container.children) {
-                    this.clickedOn(child, position)
+                    this.clickedOn(child.element, position)
                 }
             }
             if (element instanceof Clickable) {
@@ -73,8 +68,6 @@ namespace UI {
     interface Position {
         position: Vector2
         setPosition(position: Vector2): Element
-        positionMethod: PositionMethod
-        setPositionMethod(method: PositionMethod): Element
         size: Vector2
         setSize(size: Vector2): Element
     }
@@ -91,32 +84,20 @@ namespace UI {
         setOnClick(onClick: (position: Vector2) => void): Element
     }
 
-    class Element implements Position {
+    export class Element implements Position {
         parent: Container
         position: Vector2
         size: Vector2
-        positionMethod: PositionMethod
-        constructor(position: Vector2, size: Vector2) {
+        constructor(size: Vector2) {
             this.parent = null
-            this.position = position
+            this.position = Vector2.zero
             this.size = size
-            this.positionMethod = PositionMethod.CENTER
         }
 
         draw(ctx: Image): void { }
 
-        setParent(container: Container): void {
-            this.parent = container
-            container.children.push(this)
-        }
-
         setPosition(position: Vector2): Element {
             this.position = position
-            return this
-        }
-
-        setPositionMethod(method: PositionMethod): Element {
-            this.positionMethod = method
             return this
         }
 
@@ -130,8 +111,8 @@ namespace UI {
         clickable: boolean
         onClick: (position: Vector2) => void
 
-        constructor(position: Vector2, size: Vector2) {
-            super(position, size)
+        constructor(size: Vector2) {
+            super(size)
             this.clickable = false
         }
 
@@ -163,8 +144,8 @@ namespace UI {
         textAlign: TextAlignMode
         wrap: boolean
         
-        constructor(position: Vector2, text: string, color?: color) {
-            super(position, Vector2.zero)
+        constructor(text: string, color?: color) {
+            super(Vector2.zero)
             this.color = color ? color : game.Color.Black
             this.fontSize = FontSize.Medium
             this.textAlign = TextAlignMode.Left
@@ -222,17 +203,7 @@ namespace UI {
         draw(ctx: Image): void {
             const textGridSize = TextElement.textGridSize(this.text)
 
-            let offset = this.position.clone()
-            switch (this.positionMethod) {
-                case PositionMethod.TOP_LEFT: {
-                    offset.add(Vector2.zero)
-                    break
-                }
-                case PositionMethod.CENTER: {
-                    offset.add(Vector2.scale(this.size, -1/2))
-                    break
-                }
-            }
+            let offset = Vector2.add(this.position, Vector2.scale(this.size, -1/2))
 
             const sizeOfChar = TextElement.sizeOfChar(this.fontSize)
             const splitText = this.text.split("\n")
@@ -302,11 +273,6 @@ namespace UI {
             return this
         }
 
-        setPositionMethod(method: PositionMethod): TextElement {
-            super.setPositionMethod(method)
-            return this
-        }
-
         setSize(size: Vector2): TextElement {
             super.setSize(size)
             return this
@@ -315,35 +281,20 @@ namespace UI {
 
     export class ImageElement extends Element {
         img: Image
-        constructor(position: Vector2, img: Image) {
-            super(position, new Vector2(img.width, img.height))
+        constructor(img: Image) {
+            super(new Vector2(img.width, img.height))
             this.img = img
         }
 
         draw(ctx: Image): void {
-            switch (this.positionMethod) {
-                case PositionMethod.CENTER: {
-                    ctx.blit(
-                        this.position.x - this.size.x / 2,
-                        this.position.y - this.size.y / 2,
-                        this.size.x, this.size.y,
-                        this.img, 0, 0,
-                        this.size.x, this.size.y,
-                        true, false
-                    )
-                    break
-                }
-                case PositionMethod.TOP_LEFT: {
-                    ctx.blit(
-                        this.position.x, this.position.y,
-                        this.size.x, this.size.y,
-                        this.img, 0, 0,
-                        this.size.x, this.size.y,
-                        true, false
-                    )
-                    break
-                }
-            }
+            ctx.blit(
+                this.position.x - this.size.x / 2,
+                this.position.y - this.size.y / 2,
+                this.size.x, this.size.y,
+                this.img, 0, 0,
+                this.size.x, this.size.y,
+                true, false
+            )
         }
 
         setPosition(position: Vector2): ImageElement {
@@ -352,11 +303,6 @@ namespace UI {
         }
 
         setSize(position: Vector2): ImageElement {
-            return this
-        }
-
-        setPositionMethod(method: PositionMethod): ImageElement {
-            super.setPositionMethod(method)
             return this
         }
     }
@@ -368,9 +314,8 @@ namespace UI {
         borderColor: color
         borderWidth: number
 
-        constructor(position: Vector2, size: Vector2, color?: color) {
-            super(position, size)
-            this.positionMethod = PositionMethod.CENTER
+        constructor(size: Vector2, color?: color) {
+            super(size)
 
             this.color = color ? color : game.Color.Tan
 
@@ -380,50 +325,24 @@ namespace UI {
         }
 
         draw(ctx: Image): void {
-            switch (this.positionMethod) {
-                case PositionMethod.CENTER: {
-                    if (this.border) {
-                        ctx.fillRect(
-                            this.position.x - this.size.x / 2, this.position.y - this.size.y / 2,
-                            this.size.x, this.size.y,
-                            this.borderColor
-                        )
-                        ctx.fillRect(
-                            this.position.x - this.size.x / 2 + this.borderWidth,
-                            this.position.y - this.size.y / 2 + this.borderWidth,
-                            this.size.x - this.borderWidth * 2, this.size.y - this.borderWidth * 2,
-                            this.color
-                        )
-                    } else {
-                        ctx.fillRect(
-                            this.position.x - this.size.x / 2, this.position.y - this.size.y / 2,
-                            this.size.x, this.size.y,
-                            this.color
-                        )
-                    }
-                    break
-                }
-                case PositionMethod.TOP_LEFT: {
-                    if (this.border) {
-                        ctx.fillRect(
-                            this.position.x, this.position.y,
-                            this.size.x, this.size.y,
-                            this.borderColor
-                        )
-                        ctx.fillRect(
-                            this.position.x + this.borderWidth, this.position.y + this.borderWidth,
-                            this.size.x - this.borderWidth * 2, this.size.y - this.borderWidth * 2,
-                            this.color
-                        )
-                    } else {
-                        ctx.fillRect(
-                            this.position.x, this.position.y,
-                            this.size.x, this.size.y,
-                            this.color
-                        )
-                    }
-                    break
-                }
+            if (this.border) {
+                ctx.fillRect(
+                    this.position.x - this.size.x / 2, this.position.y - this.size.y / 2,
+                    this.size.x, this.size.y,
+                    this.borderColor
+                )
+                ctx.fillRect(
+                    this.position.x - this.size.x / 2 + this.borderWidth,
+                    this.position.y - this.size.y / 2 + this.borderWidth,
+                    this.size.x - this.borderWidth * 2, this.size.y - this.borderWidth * 2,
+                    this.color
+                )
+            } else {
+                ctx.fillRect(
+                    this.position.x - this.size.x / 2, this.position.y - this.size.y / 2,
+                    this.size.x, this.size.y,
+                    this.color
+                )
             }
         }
 
@@ -434,11 +353,6 @@ namespace UI {
 
         setSize(size: Vector2): Box {
             super.setSize(size)
-            return this
-        }
-
-        setPositionMethod(method: PositionMethod): Box {
-            super.setPositionMethod(method)
             return this
         }
 
@@ -469,22 +383,10 @@ namespace UI {
 
         pointInside(position: Vector2): boolean {
             let left, right, top, bottom
-            switch (this.positionMethod) {
-                case PositionMethod.TOP_LEFT: {
-                    left = this.position.x
-                    right = this.position.x + this.size.x
-                    top = this.position.y
-                    bottom = this.position.y + this.size.y
-                    break
-                }
-                case PositionMethod.CENTER: {
-                    left = this.position.x - this.size.x / 2
-                    right = this.position.x + this.size.x / 2
-                    top = this.position.y - this.size.y / 2
-                    bottom = this.position.y + this.size.y / 2
-                    break
-                }
-            }
+            left = this.position.x - this.size.x / 2
+            right = this.position.x + this.size.x / 2
+            top = this.position.y - this.size.y / 2
+            bottom = this.position.y + this.size.y / 2
             return position.x >= left && position.x < right && position.y < bottom && position.y > top
         }
 
@@ -504,9 +406,8 @@ namespace UI {
         borderColor: color
         borderWidth: number
 
-        constructor(position: Vector2, radius: number, color?: color) {
-            super(position, new Vector2(radius * 2, radius * 2))
-            this.positionMethod = PositionMethod.CENTER
+        constructor(radius: number, color?: color) {
+            super(new Vector2(radius * 2, radius * 2))
             this.radius = radius
 
             this.color = color ? color : game.Color.Tan
@@ -516,25 +417,11 @@ namespace UI {
             this.borderWidth = 1
         }
         draw(ctx: Image): void {
-            switch (this.positionMethod) {
-                case PositionMethod.CENTER: {
-                    if (this.border) {
-                        this.singleCircle(ctx, this.position.x, this.position.y, this.radius, this.borderColor)
-                        this.singleCircle(ctx, this.position.x, this.position.y, this.radius - this.borderWidth, this.color)
-                    } else {
-                        this.singleCircle(ctx, this.position.x, this.position.y, this.radius, this.color)
-                    }
-                    break
-                }
-                case PositionMethod.TOP_LEFT: {
-                    if (this.border) {
-                        this.singleCircle(ctx, this.position.x - this.radius, this.position.y - this.radius, this.radius, this.borderColor)
-                        this.singleCircle(ctx, this.position.x - this.radius, this.position.y - this.radius, this.radius - this.borderWidth, this.color)
-                    } else {
-                        this.singleCircle(ctx, this.position.x, this.position.y, this.radius, this.color)
-                    }
-                    break
-                }
+            if (this.border) {
+                this.singleCircle(ctx, this.position.x, this.position.y, this.radius, this.borderColor)
+                this.singleCircle(ctx, this.position.x, this.position.y, this.radius - this.borderWidth, this.color)
+            } else {
+                this.singleCircle(ctx, this.position.x, this.position.y, this.radius, this.color)
             }
         }
 
@@ -552,11 +439,6 @@ namespace UI {
 
         setSize(size: Vector2): Circle {
             super.setSize(size)
-            return this
-        }
-
-        setPositionMethod(method: PositionMethod): Circle {
-            super.setPositionMethod(method)
             return this
         }
 
@@ -598,111 +480,59 @@ namespace UI {
 
     export class RoundedBox extends Box {
         cornerRadius: number
-        constructor(position: Vector2, size: Vector2, cornerRadius: number, color?: color) {
-            super(position, size, color)
+        constructor(size: Vector2, cornerRadius: number, color?: color) {
+            super(size, color)
             this.cornerRadius = cornerRadius
         }
         draw(ctx: Image) {
-            switch (this.positionMethod) {
-                case PositionMethod.TOP_LEFT: {
-                    let cornerRadius = Math.min(this.cornerRadius, Math.ceil(Math.min(this.size.x, this.size.y) / 2) - 1)
-                    let left = this.position.x + cornerRadius - 1
-                    let right = this.position.x + this.size.x - cornerRadius
-                    let top = this.position.y + cornerRadius - 1
-                    let bottom = this.position.y + this.size.y - cornerRadius
-                    if (this.border) {
-                        ctx.fillCircle(left, top, cornerRadius, this.borderColor)
-                        ctx.fillCircle(right, top, cornerRadius, this.borderColor)
-                        ctx.fillCircle(left, bottom, cornerRadius, this.borderColor)
-                        ctx.fillCircle(right, bottom, cornerRadius, this.borderColor)
+            let cornerRadius = Math.min(this.cornerRadius, Math.round(Math.min(this.size.x, this.size.y) / 2))
+            let left = this.position.x - this.size.x / 2 + cornerRadius - 1
+            let right = this.position.x + this.size.x / 2 - cornerRadius
+            let top = this.position.y - this.size.y / 2 + cornerRadius - 1
+            let bottom = this.position.y + this.size.y / 2 - cornerRadius
 
-                        ctx.fillRect(left, this.position.y, right - left, this.size.y, this.borderColor)
-                        ctx.fillRect(this.position.x, top, this.size.x, bottom - top, this.borderColor)
+            if (this.border) {
+                ctx.fillCircle(left, top, cornerRadius, this.borderColor)
+                ctx.fillCircle(right, top, cornerRadius, this.borderColor)
+                ctx.fillCircle(left, bottom, cornerRadius, this.borderColor)
+                ctx.fillCircle(right, bottom, cornerRadius, this.borderColor)
 
-                        ctx.fillCircle(left, top, cornerRadius - this.borderWidth, this.color)
-                        ctx.fillCircle(right, top, cornerRadius - this.borderWidth, this.color)
-                        ctx.fillCircle(left, bottom, cornerRadius - this.borderWidth, this.color)
-                        ctx.fillCircle(right, bottom, cornerRadius - this.borderWidth, this.color)
+                ctx.fillRect(left, this.position.y - this.size.y / 2, right - left, this.size.y, this.borderColor)
+                ctx.fillRect(this.position.x - this.size.x / 2, top, this.size.x, bottom - top, this.borderColor)
 
-                        ctx.fillRect(
-                            left, this.position.y + this.borderWidth,
-                            right - left, this.size.y - this.borderWidth * 2,
-                            this.color
-                        )
-                        ctx.fillRect(
-                            this.position.x + this.borderWidth, top,
-                            this.size.x - this.borderWidth * 2, bottom - top,
-                            this.color
-                        )
-                    } else {
-                        ctx.fillCircle(left, top, cornerRadius, this.color)
-                        ctx.fillCircle(right, top, cornerRadius, this.color)
-                        ctx.fillCircle(left, bottom, cornerRadius, this.color)
-                        ctx.fillCircle(right, bottom, cornerRadius, this.color)
+                ctx.fillCircle(left, top, cornerRadius - this.borderWidth, this.color)
+                ctx.fillCircle(right, top, cornerRadius - this.borderWidth, this.color)
+                ctx.fillCircle(left, bottom, cornerRadius - this.borderWidth, this.color)
+                ctx.fillCircle(right, bottom, cornerRadius - this.borderWidth, this.color)
 
-                        ctx.fillRect(left, this.position.y, right - left, this.size.y, this.color)
-                        ctx.fillRect(this.position.x, top, this.size.x, bottom - top, this.color)
-                    }
-                    break
-                }
-                case PositionMethod.CENTER: {
-                    let cornerRadius = Math.min(this.cornerRadius, Math.round(Math.min(this.size.x, this.size.y) / 2))
-                    let left = this.position.x - this.size.x / 2 + cornerRadius - 1
-                    let right = this.position.x + this.size.x / 2 - cornerRadius
-                    let top = this.position.y - this.size.y / 2 + cornerRadius - 1
-                    let bottom = this.position.y + this.size.y / 2 - cornerRadius
+                ctx.fillRect(
+                    left, this.position.y - this.size.y / 2 + this.borderWidth,
+                    right - left, this.size.y - this.borderWidth * 2,
+                    this.color
+                )
+                ctx.fillRect(
+                    this.position.x + this.borderWidth - this.size.x / 2, top,
+                    this.size.x - this.borderWidth * 2, bottom - top,
+                    this.color
+                )
+            } else {
+                ctx.fillCircle(left, top, cornerRadius, this.color)
+                ctx.fillCircle(right, top, cornerRadius, this.color)
+                ctx.fillCircle(left, bottom, cornerRadius, this.color)
+                ctx.fillCircle(right, bottom, cornerRadius, this.color)
 
-                    if (this.border) {
-                        ctx.fillCircle(left, top, cornerRadius, this.borderColor)
-                        ctx.fillCircle(right, top, cornerRadius, this.borderColor)
-                        ctx.fillCircle(left, bottom, cornerRadius, this.borderColor)
-                        ctx.fillCircle(right, bottom, cornerRadius, this.borderColor)
-
-                        ctx.fillRect(left, this.position.y - this.size.y / 2, right - left, this.size.y, this.borderColor)
-                        ctx.fillRect(this.position.x - this.size.x / 2, top, this.size.x, bottom - top, this.borderColor)
-
-                        ctx.fillCircle(left, top, cornerRadius - this.borderWidth, this.color)
-                        ctx.fillCircle(right, top, cornerRadius - this.borderWidth, this.color)
-                        ctx.fillCircle(left, bottom, cornerRadius - this.borderWidth, this.color)
-                        ctx.fillCircle(right, bottom, cornerRadius - this.borderWidth, this.color)
-
-                        ctx.fillRect(
-                            left, this.position.y - this.size.y / 2 + this.borderWidth,
-                            right - left, this.size.y - this.borderWidth * 2,
-                            this.color
-                        )
-                        ctx.fillRect(
-                            this.position.x + this.borderWidth - this.size.x / 2, top,
-                            this.size.x - this.borderWidth * 2, bottom - top,
-                            this.color
-                        )
-                    } else {
-                        ctx.fillCircle(left, top, cornerRadius, this.color)
-                        ctx.fillCircle(right, top, cornerRadius, this.color)
-                        ctx.fillCircle(left, bottom, cornerRadius, this.color)
-                        ctx.fillCircle(right, bottom, cornerRadius, this.color)
-
-                        ctx.fillRect(left, this.position.y - this.size.y / 2, right - left, this.size.y, this.color)
-                        ctx.fillRect(this.position.x - this.size.x / 2, top, this.size.x, bottom - top, this.color)
-                    }
-
-                    break
-                }
+                ctx.fillRect(left, this.position.y - this.size.y / 2, right - left, this.size.y, this.color)
+                ctx.fillRect(this.position.x - this.size.x / 2, top, this.size.x, bottom - top, this.color)
             }
         }
 
-        setPosition(position: Vector2): Box {
+        setPosition(position: Vector2): RoundedBox {
             super.setPosition(position)
             return this
         }
 
-        setSize(size: Vector2): Box {
+        setSize(size: Vector2): RoundedBox {
             super.setSize(size)
-            return this
-        }
-
-        setPositionMethod(method: PositionMethod): Box {
-            super.setPositionMethod(method)
             return this
         }
 
@@ -732,11 +562,81 @@ namespace UI {
         }
     }
 
+    interface Alignment {
+        h: AlignmentMethodH
+        v: AlignmentMethodV
+    }
+
+    interface Padding {
+        left: number
+        right: number
+        top: number
+        bottom: number
+    }
+
+    export class ContainedElement {
+        element: Element
+        align: Alignment
+        pad: Padding
+        constructor(element: Element) {
+            this.element = element
+            this.align = {
+                h: AlignmentMethodH.CENTER,
+                v: AlignmentMethodV.CENTER
+            }
+            this.pad = {
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        setAlignH(align: AlignmentMethodH): ContainedElement {
+            this.align.h = align
+            return this
+        }
+        setAlignV(align: AlignmentMethodV): ContainedElement {
+            this.align.v = align
+            return this
+        }
+        setPadLeft(pad: number): ContainedElement {
+            this.pad.left = pad
+            return this
+        }
+        setPadRight(pad: number): ContainedElement {
+            this.pad.right = pad
+            return this
+        }
+        setPadTop(pad: number): ContainedElement {
+            this.pad.top = pad
+            return this
+        }
+        setPadBottom(pad: number): ContainedElement {
+            this.pad.bottom = pad
+            return this
+        }
+        setPadH(pad: number): ContainedElement {
+            this.setPadLeft(pad)
+            this.setPadRight(pad)
+            return this
+        }
+        setPadV(pad: number): ContainedElement {
+            this.setPadTop(pad)
+            this.setPadBottom(pad)
+            return this
+        }
+        setPadding(pad: number): ContainedElement {
+            this.setPadH(pad)
+            this.setPadV(pad)
+            return this
+        }
+    }
+
     class Container extends Element {
-        children: Element[]
+        children: ContainedElement[]
         shape: Clickable
-        constructor(position: Vector2, size: Vector2) {
-            super(position, size)
+        constructor() {
+            super(Vector2.zero)
             this.children = []
         }
 
@@ -752,12 +652,11 @@ namespace UI {
             this.update()
             if (this.shape != null) {
                 this.shape.setPosition(this.position)
-                this.shape.setPositionMethod(this.positionMethod)
                 this.shape.setSize(this.size)
                 this.shape.draw(ctx)
             }
             for (let child of this.children) {
-                child.draw(ctx)
+                child.element.draw(ctx)
             }
         }
 
@@ -769,110 +668,66 @@ namespace UI {
             this.size = size
             return this
         }
-        setPositionMethod(method: PositionMethod): Container {
-            this.positionMethod = method
-            return this
-        }
         setShape(shape: Clickable): Container {
             this.shape = shape
             return this
         }
-        addChild(child: Element): Container {
-            child.setParent(this)
+        addChild(child: ContainedElement): Container {
+            this.children.push(child)
             return this
         }
     }
 
     export class VerticalStack extends Container {
-        spacing: number
-        alignmentMethod: AlignmentMethodH
-
-        constructor(position: Vector2, children?: Element[]) {
-            super(position, Vector2.zero)
-            this.spacing = 0
-            if (children) {
-                this.children = children
-                this.update()
-            }
-            this.alignmentMethod = AlignmentMethodH.CENTER
+        constructor() {
+            super()
         }
 
         update(): void {
             super.update()
-            this.size = new Vector2(0, this.spacing)
+            this.size = Vector2.zero
             for (let child of this.children) {
-                this.size.y += child.size.y
-                this.size.y += this.spacing
-                this.size.x = Math.max(this.size.x, child.size.x)
+                const childSize = new Vector2(
+                    child.pad.left + child.element.size.x + child.pad.right,
+                    child.pad.top + child.element.size.y + child.pad.bottom
+                )
+                this.size.x = Math.max(this.size.x, childSize.x)
+                this.size.y += childSize.y
             }
 
-            this.size.x += this.spacing * 2
-
-            switch (this.positionMethod) {
-                case PositionMethod.TOP_LEFT: {
-                    let offset = this.spacing
-                    for (let child of this.children) {
-                        switch (this.alignmentMethod) {
-                            case AlignmentMethodH.LEFT: {
-                                child.setPosition(new Vector2(this.position.x, this.position.y + offset))
-                                break
-                            }
-                            case AlignmentMethodH.RIGHT: {
-                                child.setPosition(new Vector2(this.position.x + (this.size.x - child.size.x), this.position.y + offset))
-                                break
-                            }
-                            case AlignmentMethodH.CENTER: {
-                                child.setPosition(new Vector2(this.position.x + (this.size.x - child.size.x) / 2, this.position.y + offset))
-                                break
-                            }
-                        }
-                        offset += child.size.y
-                        offset += this.spacing
+            let offset = -this.size.y / 2
+            for (let child of this.children) {
+                offset += child.pad.top
+                switch (child.align.h) {
+                    case AlignmentMethodH.LEFT: {
+                        child.element.setPosition(new Vector2(
+                            this.position.x - (this.size.x - child.element.size.x) / 2,
+                            this.position.y + offset + child.element.size.y / 2
+                        ))
+                        break
                     }
-                    break
-                }
-                case PositionMethod.CENTER: {
-                    let offset = -this.size.y / 2 + this.spacing
-                    for (let child of this.children) {
-                        switch (this.alignmentMethod) {
-                            case AlignmentMethodH.LEFT: {
-                                child.setPosition(new Vector2(this.position.x - (this.size.x - child.size.x) / 2, this.position.y + offset + child.size.y / 2))
-                                break
-                            }
-                            case AlignmentMethodH.RIGHT: {
-                                child.setPosition(new Vector2(this.position.x + (this.size.x - child.size.x) / 2, this.position.y + offset + child.size.y / 2))
-                                break
-                            }
-                            case AlignmentMethodH.CENTER: {
-                                child.setPosition(new Vector2(this.position.x, this.position.y + offset + child.size.y / 2))
-                                break
-                            }
-                        }
-                        offset += child.size.y
-                        offset += this.spacing
+                    case AlignmentMethodH.RIGHT: {
+                        child.element.setPosition(new Vector2(
+                            this.position.x + (this.size.x - child.element.size.x) / 2,
+                            this.position.y + offset + child.element.size.y / 2
+                            ))
+                        break
                     }
-                    break
+                    case AlignmentMethodH.CENTER: {
+                        child.element.setPosition(new Vector2(
+                            this.position.x,
+                            this.position.y + offset + child.element.size.y / 2
+                        ))
+                        break
+                    }
                 }
+                offset += child.element.size.y
+                offset += child.pad.bottom
             }
-        }
-
-        setSpacing(spacing: number): VerticalStack {
-            this.spacing = spacing
-            return this
-        }
-
-        setAlignmentMethod(method: AlignmentMethodH): VerticalStack {
-            this.alignmentMethod = method
-            return this
         }
 
         setPosition(position: Vector2): VerticalStack {
             super.setPosition(position)
-            return this
-        }
-
-        setPositionMethod(method: PositionMethod): VerticalStack {
-            super.setPositionMethod(method)
             return this
         }
 
@@ -886,105 +741,61 @@ namespace UI {
             return this
         }
 
-        addChild(child: Element): VerticalStack {
+        addChild(child: ContainedElement): VerticalStack {
             super.addChild(child)
             return this
         }
     }
 
     export class HorizontalStack extends Container {
-        spacing: number
-        alignmentMethod: AlignmentMethodV
-
-        constructor(position: Vector2, children?: Element[]) {
-            super(position, Vector2.zero)
-            this.spacing = 0
-            this.alignmentMethod = AlignmentMethodV.CENTER
-            if (children) {
-                this.children = children
-                this.update()
-            }
+        constructor() {
+            super()
         }
 
         update(): void {
             super.update()
-            this.size = new Vector2(this.spacing, 0)
+            this.size = Vector2.zero
             for (let child of this.children) {
-                this.size.x += child.size.x
-                this.size.x += this.spacing
-                this.size.y = Math.max(this.size.y, child.size.y)
+                const childSize = new Vector2(
+                    child.pad.left + child.element.size.x + child.pad.right,
+                    child.pad.top + child.element.size.y + child.pad.bottom
+                )
+                this.size.x += childSize.x
+                this.size.y = Math.max(this.size.y, childSize.y)
             }
-
-            switch (this.positionMethod) {
-                case PositionMethod.TOP_LEFT: {
-                    let offset = this.spacing
-                    for (let child of this.children) {
-                        switch (this.alignmentMethod) {
-                            case AlignmentMethodV.TOP: {
-                                child.setPosition(new Vector2(this.position.x + offset, this.position.y))
-                                break
-                            }
-                            case AlignmentMethodV.BOTTOM: {
-                                child.setPosition(new Vector2(this.position.x + offset, this.position.y + (this.size.y - child.size.y)))
-                                break
-                            }
-                            case AlignmentMethodV.CENTER: {
-                                child.setPosition(new Vector2(this.position.x + offset, this.position.y - (this.size.y - child.size.y) / 2))
-                                break
-                            }
-                        }
-                        offset += child.size.x
-                        offset += this.spacing
+            let offset = -this.size.x / 2
+            for (let child of this.children) {
+                offset += child.pad.left
+                switch (child.align.v) {
+                    case AlignmentMethodV.TOP: {
+                        child.element.setPosition(new Vector2(
+                            this.position.x + offset + child.element.size.x / 2,
+                            this.position.y + child.element.size.y / 2 - this.size.y / 2 + child.pad.top
+                        ))
+                        break
                     }
-                    break
-                }
-                case PositionMethod.CENTER: {
-                    let offset = this.spacing
-                    for (let child of this.children) {
-                        switch (this.alignmentMethod) {
-                            case AlignmentMethodV.TOP: {
-                                child.setPosition(
-                                    new Vector2(this.position.x + offset - (this.size.x - child.size.x) / 2,
-                                    this.position.y + child.size.y / 2 - this.size.y / 2)
-                                )
-                                break
-                            }
-                            case AlignmentMethodV.BOTTOM: {
-                                child.setPosition(
-                                    new Vector2(this.position.x + offset - (this.size.x - child.size.x) / 2,
-                                    this.position.y - child.size.y / 2 + this.size.y / 2))
-                                break
-                            }
-                            case AlignmentMethodV.CENTER: {
-                                child.setPosition(new Vector2(this.position.x + offset - (this.size.x - child.size.x) / 2, this.position.y))
-                                break
-                            }
-                        }
-                        offset += child.size.x
-                        offset += this.spacing
+                    case AlignmentMethodV.BOTTOM: {
+                        child.element.setPosition(new Vector2(
+                            this.position.x + offset + child.element.size.x / 2,
+                            this.position.y - child.element.size.y / 2 + this.size.y / 2 + child.pad.top
+                        ))
+                        break
                     }
-                    break
+                    case AlignmentMethodV.CENTER: {
+                        child.element.setPosition(new Vector2(
+                            this.position.x + offset + child.element.size.x / 2,
+                            this.position.y + (child.pad.top - child.pad.bottom) / 2
+                        ))
+                        break
+                    }
                 }
+                offset += child.element.size.x
+                offset += child.pad.right
             }
-        }
-
-        setSpacing(spacing: number): HorizontalStack {
-            this.spacing = spacing
-            return this
-        }
-
-        setAlignmentMethod(method: AlignmentMethodV): HorizontalStack {
-            this.alignmentMethod = method
-            return this
         }
 
         setPosition(position: Vector2): HorizontalStack {
             super.setPosition(position)
-            return this
-        }
-
-        setPositionMethod(method: PositionMethod): HorizontalStack {
-            super.setPositionMethod(method)
             return this
         }
 
@@ -998,106 +809,56 @@ namespace UI {
             return this
         }
 
-        addChild(child: Element): HorizontalStack {
+        addChild(child: ContainedElement): HorizontalStack {
             super.addChild(child)
             return this
         }
     }
 
     export class DepthStack extends Container {
-        spacing: number
-        alignmentMethodH: AlignmentMethodH
-        alignmentMethodV: AlignmentMethodV
-        constructor(position: Vector2, children?: Element[]) {
-            super(position, Vector2.zero)
-            if (children) {
-                this.children = children
-                this.update()
-            }
-            this.alignmentMethodH = AlignmentMethodH.CENTER
-            this.alignmentMethodV = AlignmentMethodV.CENTER
-            this.spacing = 0
+        constructor() {
+            super()
         }
         update(): void {
             super.update()
             this.size = Vector2.zero
             for (let child of this.children) {
-                child.setPositionMethod(this.positionMethod)
-                this.size = new Vector2(Math.max(this.size.x, child.size.x), Math.max(this.size.y, child.size.y))
+                this.size = new Vector2(
+                    Math.max(this.size.x, child.pad.left + child.element.size.x + child.pad.right),
+                    Math.max(this.size.y, child.pad.top + child.element.size.y + child.pad.bottom)
+                )
             }
-            this.size.x += this.spacing * 2
-            this.size.y += this.spacing * 2
             for (let child of this.children) {
-                switch (this.positionMethod) {
-                    case PositionMethod.CENTER: {
-                        let position = Vector2.zero
-                        switch (this.alignmentMethodH) {
-                            case AlignmentMethodH.LEFT: {
-                                position.x = this.position.x - (this.size.x / 2 - this.spacing) + child.size.x / 2
-                                break
-                            }
-                            case AlignmentMethodH.CENTER: {
-                                position.x = this.position.x
-                                break
-                            }
-                            case AlignmentMethodH.RIGHT: {
-                                position.x = this.position.x + (this.size.x / 2 - this.spacing) - child.size.x / 2
-                                break
-                            }
-                        }
-                        switch (this.alignmentMethodV) {
-                            case AlignmentMethodV.TOP: {
-                                position.y = this.position.y - (this.size.y / 2 - this.spacing) + child.size.y / 2
-                                break
-                            }
-                            case AlignmentMethodV.CENTER: {
-                                position.y = this.position.y
-                                break
-                            }
-                            case AlignmentMethodV.BOTTOM: {
-                                position.y = this.position.y + (this.size.y / 2 - this.spacing) - child.size.y / 2
-                                break
-                            }
-                        }
-                        child.setPosition(position)
+                let position = Vector2.zero
+                switch(child.align.h) {
+                    case AlignmentMethodH.LEFT: {
+                        position.x = this.position.x - this.size.x / 2 + child.element.size.x / 2 + child.pad.left
                         break
                     }
-                    case PositionMethod.TOP_LEFT: {
-                        let position = Vector2.zero
-                        switch (this.alignmentMethodH) {
-                            case AlignmentMethodH.LEFT: {
-                                position.x = this.position.x - (this.size.x / 2 - this.spacing) + child.size.x / 2
-                                break
-                            }
-                            case AlignmentMethodH.CENTER: {
-                                position.x = this.position.x
-                                break
-                            }
-                            case AlignmentMethodH.RIGHT: {
-                                position.x = this.position.x + (this.size.x / 2 - this.spacing) - child.size.x / 2
-                                break
-                            }
-                        }
-                        switch (this.alignmentMethodV) {
-                            case AlignmentMethodV.TOP: {
-                                position.y = this.position.y - (this.size.y / 2 - this.spacing) + child.size.y / 2
-                                break
-                            }
-                            case AlignmentMethodV.CENTER: {
-                                position.y = this.position.y
-                                break
-                            }
-                            case AlignmentMethodV.BOTTOM: {
-                                position.y = this.position.y + (this.size.y / 2 - this.spacing) - child.size.y / 2
-                                break
-                            }
-                        }
-                        position.x += this.size.x / 2
-                        position.y += this.size.y / 2
-                        child.setPosition(position)
+                    case AlignmentMethodH.CENTER: {
+                        position.x = this.position.x
+                        break
+                    }
+                    case AlignmentMethodH.RIGHT: {
+                        position.x = this.position.x + this.size.x / 2 - child.element.size.x / 2 - child.pad.right
                         break
                     }
                 }
+                switch (child.align.v) {
+                    case AlignmentMethodV.TOP: {
+                        position.y = this.position.y - this.size.y / 2 + child.element.size.y / 2 + child.pad.top
+                        break
+                    }
+                    case AlignmentMethodV.CENTER: {
+                        position.y = this.position.y
+                        break
+                    }
+                    case AlignmentMethodV.BOTTOM: {
+                        position.y = this.position.y + this.size.y / 2 - child.element.size.y / 2 - child.pad.bottom
+                        break
+                    }
+                }
+                child.element.setPosition(position)
             }
         }
 
@@ -1109,20 +870,12 @@ namespace UI {
             super.setSize(size)
             return this
         }
-        setPositionMethod(method: PositionMethod): DepthStack {
-            super.setPositionMethod(method)
-            return this
-        }
         setShape(shape: Clickable): DepthStack {
             super.setShape(shape)
             return this
         }
-        addChild(child: Element): DepthStack {
+        addChild(child: ContainedElement): DepthStack {
             super.addChild(child)
-            return this
-        }
-        setSpacing(spacing: number): DepthStack {
-            this.spacing = spacing
             return this
         }
     }

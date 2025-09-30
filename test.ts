@@ -109,6 +109,8 @@ const d = new UI.Display()
 
 // d.addElement(shapeHolder)
 
+// -----------------------
+
 // const shop = new UI.DepthStack(new Vector2(80, 60))
 //     .setSpacing(2)
 //     .setShape(
@@ -177,122 +179,75 @@ const d = new UI.Display()
 
 // --------------------------------
 
-const shopContainer = new UI.VerticalStack(
-    UI.Display.center
-).setShape(
-    new UI.RoundedBox(
-        Vector2.zero,
-        Vector2.zero,
-        10, game.Color.LightBlue
-    ).setBorderColor(
-        game.Color.Blue
-    ).setBorderWidth(
-        2
-    )
-)
+// const shop = new UI.HorizontalStack()
+// shop.addChild(
+//     new UI.ContainedElement(
+//         new UI.Circle(5, game.Color.Red)
+//     ).setPadding(
+//         3
+//     )
+// )
+// shop.addChild(
+//     new UI.ContainedElement(
+//         new UI.Circle(10, game.Color.Red)
+//     ).setPadding(
+//         3
+//     ).setPadBottom(
+//         10
+//     )
+// )
+// shop.setPosition(UI.Display.center)
 
-interface upgrade {
-    name: string,
-    icon: Image,
-    description: string,
-    price: number
-}
+// shop.setShape(
+//     new UI.Box(Vector2.zero, game.Color.LightBlue)
+// )
 
-const upgrades: upgrade[] = [
-    {
-        name: "Clicker",
-        icon: assets.image`IconClicker`,
-        description: "makes a click worth more",
-        price: 10
-    },
-    {
-        name: "Grandma",
-        icon: assets.image`IconGrandma`,
-        description: "produces 0.1 cookies/s",
-        price: 5
-    },
-    {
-        name: "Bakery",
-        icon: assets.image`IconBakery`,
-        description: "produces 1 cookie/s",
-        price: 20
-    }
-]
+// d.addElement(shop)
 
-for (let up of upgrades) {
-    shopContainer.addChild(
-        new UI.HorizontalStack(
-            Vector2.zero
-        ).setShape(
-            new UI.RoundedBox(
-                Vector2.zero,
-                Vector2.zero,
-                5    
-            )
-        ).setSpacing(
+// -------------------------------
+
+const shop = new UI.DepthStack().setShape(
+        new UI.RoundedBox(
+            Vector2.zero, 8, game.Color.Teal
+        ).setBorderColor(
+            game.Color.LightBlue
+        ).setBorderWidth(
             2
-        ).addChild(
-            new UI.VerticalStack(
-                Vector2.zero
-            ).addChild(
-                new UI.TextElement(
-                    Vector2.zero,
-                    up.name
-                )
-            ).addChild(
-                new UI.TextElement(
-                    Vector2.zero,
-                    up.description
-                ).setTextSize(
-                    UI.FontSize.Small
-                ).setWidth(
-                    80
-                )
-            )
-        ).addChild(
-            new UI.VerticalStack(
-                Vector2.zero
-            )
-            .setSpacing(
-                2
-            ).setShape(
-                new UI.Box(
-                    Vector2.zero,
-                    Vector2.zero,
-                    game.Color.Brown
-                )
-            ).addChild(
-                new UI.DepthStack(
-                    Vector2.zero
-                ).addChild(
-                    new UI.ImageElement(
-                        Vector2.zero,
-                        up.icon
-                    )
-                ).setShape(
-                    new UI.RoundedBox(
-                        Vector2.zero,
-                        Vector2.zero,
-                        5
-                    ).setColor(
-                        game.Color.White
-                    ).setBorderColor(
-                        game.Color.Tan
-                    )
-                ).setSpacing(
-                    2
-                )
-            ).addChild(
-                new UI.TextElement(
-                    Vector2.zero,
-                    "$".concat(up.price.toString())
-                )
-            )
         )
     )
-}
 
-d.addElement(shopContainer)
+shop.setPosition(new Vector2(80, 60))
+shop.addChild(new UI.ContainedElement(
+    new UI.VerticalStack()
+        .addChild(new UI.ContainedElement(
+            new UI.DepthStack()
+                .addChild(new UI.ContainedElement(
+                    new UI.HorizontalStack()
+                        .addChild(new UI.ContainedElement(
+                            new UI.TextElement(
+                                "Ninja Star: "
+                            ).setTextAlignMode(UI.TextAlignMode.Center)
+                        ))
+                        .addChild(new UI.ContainedElement(
+                            new UI.ImageElement(assets.image`star`)
+                        ))
+                ))
+                .setShape(
+                    new UI.RoundedBox(Vector2.zero, 5, game.Color.LightBlue)
+                )
+        ))
+        .addChild(new UI.ContainedElement(
+            new UI.TextElement(
+                "  This ninja star belonged to the ancient senseis... Who used their power to defeat the evil guys, or something...",
+            ).setWidth(
+                100
+            ).setTextSize(
+                UI.FontSize.Small
+            )
+        ))
+))
+
+d.addElement(shop)
 
 browserEvents.MouseLeft.onEvent(browserEvents.MouseButtonEvent.Pressed, function (x: number, y: number) {
     d.clicked(new Vector2(x, y))
