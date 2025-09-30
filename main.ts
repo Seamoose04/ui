@@ -25,7 +25,36 @@ namespace UI {
         display = new Display()
     }
 
-    export type Element = Circle | Box | RoundedBox
+    //% block
+    export function CreateDepthStack(): DepthStack {
+        return new DepthStack()
+    }
+    
+    //% block
+    export function CreateVerticalStack(): VerticalStack {
+        return new VerticalStack()
+    }
+
+    //% block
+    export function CreateHorizontalStack(): HorizontalStack {
+        return new HorizontalStack()
+    }
+
+    export type Container = DepthStack | VerticalStack | HorizontalStack
+    export type Clickable = Circle | Box | RoundedBox
+    export type Element = Clickable | Container
+
+    //% block
+    export function AddToContainer(element: Element, container: Container): ContainedElement {
+        const contained = new ContainedElement(element)
+        container.addChild(contained)
+        return contained
+    }
+
+    //% block
+    export function SetShape(shape: Clickable, container: Container) {
+        container.setShape(shape)
+    }
 
     //% block
     export function AddToScreen(element: Element) {
