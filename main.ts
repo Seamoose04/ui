@@ -25,6 +25,8 @@ namespace UI {
         display = new Display()
     }
 
+    type Element = Circle | Box | RoundedBox
+
     //% block
     export function AddToScreen(element: Element) {
         display.addElement(element)

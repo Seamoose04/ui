@@ -84,7 +84,7 @@ namespace UI {
         setOnClick(onClick: (position: Vector2) => void): Element
     }
 
-    export class Element implements Position {
+    class Element implements Position {
         parent: Container
         position: Vector2
         size: Vector2
