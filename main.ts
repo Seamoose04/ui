@@ -4,18 +4,18 @@
 //% color=190 weight=100 icon="\uf5fd" block="User Interface"
 namespace UI {
     //% block
-    export function CreateCircle(radius: number): Circle {
-        return new Circle(radius)
+    export function CreateCircle(radius: number, color: game.Color): Circle {
+        return new Circle(radius, color)
     }
 
     //% block
-    export function CreateBox(width: number, height: number): Box {
-        return new Box(new Vector2(width, height))
+    export function CreateBox(width: number, height: number, color: game.Color): Box {
+        return new Box(new Vector2(width, height), color)
     }
 
     //% block
-    export function CreateRoundedBox(width: number, height: number, radius: number): RoundedBox {
-        return new RoundedBox(new Vector2(width, height), radius)
+    export function CreateRoundedBox(width: number, height: number, radius: number, color: game.Color): RoundedBox {
+        return new RoundedBox(new Vector2(width, height), radius, color)
     }
 
     let display: Display = null
