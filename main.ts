@@ -39,7 +39,7 @@ namespace UI {
         Vertical
     }
 
-    //% blockId = create_depth_stack
+    //% blockId = create_stack
     //% block = "create %kind stack"
     //% blockSetVariable=stack
     export function CreateDepthStack(kind: StackKind): DepthStack | HorizontalStack | VerticalStack {
@@ -56,29 +56,24 @@ namespace UI {
         }
     }
 
-    //% block
     export function AddToContainer(element: Element, container: Container) {
         const contained = new ContainedElement(element)
         container.addChild(contained)
         // return contained
     }
 
-    //% block
     export function SetShape(shape: Clickable, container: Container) {
         container.setShape(shape)
     }
 
-    //% block
     export function AddToScreen(element: Element) {
         display.addElement(element)
     }
 
-    //% block
     export function CenterElement(element: Element) {
         element.setPosition(Display.center)
     }
 
-    //% block
     export function PositionElement(element: Element, x: number, y: number) {
         element.setPosition(new Vector2(x, y))
     }
