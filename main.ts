@@ -25,7 +25,7 @@ namespace UI {
 
     let display: Display = null
 
-    //% block = "Initialize UI"
+    //% block = "initialize ui"
     export function InitializeUI() {
         display = new Display()
     }
@@ -38,7 +38,7 @@ namespace UI {
 
     //% block = "create %kind stack"
     //% blockSetVariable=stack
-    export function CreateDepthStack(kind: StackKind): DepthStack | HorizontalStack | VerticalStack {
+    export function CreateStack(kind: StackKind): DepthStack | HorizontalStack | VerticalStack {
         switch (kind) {
             case StackKind.Depth: {
                 return new DepthStack()
@@ -52,10 +52,11 @@ namespace UI {
         }
     }
 
+    //% block = "add element $element to container $container"
+    //% element.shadow="create_circle"
+    //% container.shadow="create_stack"
     export function AddToContainer(element: Element, container: Container) {
-        const contained = new ContainedElement(element)
-        container.addChild(contained)
-        // return contained
+        container.addChild(new ContainedElement(element))
     }
 
     export function SetShape(shape: Clickable, container: Container) {
