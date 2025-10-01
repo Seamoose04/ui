@@ -1,11 +1,14 @@
 /**
  * Provides an easy to use UI system
  */
-//% color=190 weight=100 icon="\uf5fd" block="User Interface"
+//% color=190 weight=80 icon="\uf150" block="User Interface"
+//% groups=['Shapes', 'Containers', 'Display', 'Properties', 'others']
 namespace UI {
-    //% block
+    //% blockId = create_circle
+    //% block = "create circle radius $radius color $color"
+    //% blockSetVariable=circle
     export function CreateCircle(radius: number, color: game.Color): Circle {
-        return new Circle(radius, color)
+        return new Circle(radius, color);
     }
 
     //% block
