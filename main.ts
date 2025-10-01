@@ -30,7 +30,7 @@ namespace UI {
         display = new Display()
     }
 
-    enum StackKind {
+    export enum StackKind {
         Depth,
         Horizontal,
         Vertical
