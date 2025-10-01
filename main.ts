@@ -4,21 +4,21 @@
 //% color=190 weight=80 icon="\uf150" block="User Interface"
 //% groups=["Shapes", "Containers", "Display", "Properties", "others"]
 namespace UI {
-    //% blockId = "create_circle"
+    //% blockId = create_circle
     //% block = "create circle radius $radius color $color"
     //% blockSetVariable=circle
     export function CreateCircle(radius: number, color: game.Color): Circle {
         return new Circle(radius, color);
     }
 
-    //% blockId = "create_box"
+    //% blockId = create_box
     //% block = "create box width $width height $height color $color"
     //% blockSetVariable=box
     export function CreateBox(width: number, height: number, color: game.Color): Box {
         return new Box(new Vector2(width, height), color)
     }
 
-    //% blockId = "create_rounded_box"
+    //% blockId = create_rounded_box
     //% block = "create rounded box width $width height $height radius $radius color $color"
     //% inlineInputMode = inline
     //% blockSetVariable=rounded_box
@@ -28,7 +28,7 @@ namespace UI {
 
     let display: Display = null
 
-    //% blockId = "initialize_ui"
+    //% blockId = initialize_ui
     //% block = "initialize ui"
     export function InitializeUI() {
         display = new Display()
@@ -40,7 +40,7 @@ namespace UI {
         Vertical
     }
 
-    //% blockId = "create_stack"
+    //% blockId = create_stack
     //% block = "create %kind stack"
     //% blockSetVariable=stack
     export function CreateStack(kind: StackKind): DepthStack | HorizontalStack | VerticalStack {
@@ -57,7 +57,7 @@ namespace UI {
         }
     }
 
-    //% blockId = "add_to_container"
+    //% blockId = add_to_container
     //% block = "add element $element to container $container"
     //% element.shadow="create_circle"
     //% container.shadow="create_stack"
