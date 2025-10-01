@@ -6,18 +6,22 @@
 namespace UI {
     //% blockId = create_circle
     //% block = "create circle radius $radius color $color"
-    //% group = "Shapes"
     //% blockSetVariable=circle
     export function CreateCircle(radius: number, color: game.Color): Circle {
         return new Circle(radius, color);
     }
 
-    //% block
+    //% blockId = create_box
+    //% block = "create box width $width height $height color $color"
+    //% blockSetVariable=box
     export function CreateBox(width: number, height: number, color: game.Color): Box {
         return new Box(new Vector2(width, height), color)
     }
 
-    //% block
+    //% blockId = create_rounded_box
+    //% block = "create rounded box width $width height $height radius $radius color $color"
+    //% inlineInputMode = inline
+    //% blockSetVariable=rounded_box
     export function CreateRoundedBox(width: number, height: number, radius: number, color: game.Color): RoundedBox {
         return new RoundedBox(new Vector2(width, height), radius, color)
     }
@@ -29,19 +33,27 @@ namespace UI {
         display = new Display()
     }
 
-    //% block
-    export function CreateDepthStack(): DepthStack {
-        return new DepthStack()
-    }
-    
-    //% block
-    export function CreateVerticalStack(): VerticalStack {
-        return new VerticalStack()
+    enum StackKind {
+        Depth,
+        Horizontal,
+        Vertical
     }
 
-    //% block
-    export function CreateHorizontalStack(): HorizontalStack {
-        return new HorizontalStack()
+    //% blockId = create_depth_stack
+    //% block = "create %kind stack"
+    //% blockSetVariable=stack
+    export function CreateDepthStack(kind: StackKind): DepthStack | HorizontalStack | VerticalStack {
+        switch (kind) {
+            case StackKind.Depth: {
+                return new DepthStack()
+            }
+            case StackKind.Horizontal: {
+                return new HorizontalStack()
+            }
+            case StackKind.Vertical: {
+                return new VerticalStack()
+            }
+        }
     }
 
     //% block
