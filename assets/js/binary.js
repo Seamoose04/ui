@@ -1,4 +1,4 @@
-// meta={"simUrl":"https://trg-arcade.userpxt.io/v2.0.58/---simulator","cdnUrl":"https://cdn.makecode.com","version":"3.0.1","target":"arcade","targetVersion":"2.0.58","repo":"seamoose04/ui"}
+// meta={"simUrl":"https://trg-arcade.userpxt.io/v2.0.58/---simulator","cdnUrl":"https://cdn.makecode.com","version":"3.1.0","target":"arcade","targetVersion":"2.0.58","repo":"seamoose04/ui"}
 // total=1902897 new=35.07% cached=60.11% other=4.83%
 (function (ectx) {
 'use strict';
@@ -472,7 +472,7 @@ const pxsim_pxtrt = pxsim.pxtrt;
 const pxsim_numops = pxsim.numops;
 
 
-function _main___P37669(s) {
+function _main___P41610(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -1174,9 +1174,9 @@ switch (step) {
     s.callLocIdx = 249; s.pc = 77; return s.tmp_0;
   case 77:
     r0 = s.retval;
-    globals.display___37085 = (null);
+    globals.display___40839 = (null);
     s.tmp_0 = game_onUpdate__P3276_mk(s);
-    s.tmp_0.arg0 = UI_inline__P37143;
+    s.tmp_0.arg0 = UI_inline__P40897;
     s.callLocIdx = 253; s.pc = 78; return s.tmp_0;
   case 78:
     r0 = s.retval;
@@ -1184,13 +1184,13 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-_main___P37669.info = {"start":0,"length":0,"line":0,"column":0,"endLine":0,"endColumn":0,"fileName":"main.ts","functionName":"<main>","argumentNames":[]}
-_main___P37669.continuations = [  ]
+_main___P41610.info = {"start":0,"length":0,"line":0,"column":0,"endLine":0,"endColumn":0,"fileName":"main.ts","functionName":"<main>","argumentNames":[]}
+_main___P41610.continuations = [  ]
 
-function _main___P37669_mk(s) {
+function _main___P41610_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: _main___P37669, depth: s.depth + 1,
+        parent: s, fn: _main___P41610, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -2030,7 +2030,7 @@ function inline__P9595_mk(s) {
 
 
 
-function UI_inline__P37143(s) {
+function UI_inline__P40897(s) {
 let r0 = s.r0, step = s.pc;
 s.pc = -1;
 
@@ -2040,22 +2040,22 @@ if (yieldSteps-- < 0 && maybeYield(s, step, r0) || runtime !== pxsim.runtime) re
 switch (step) {
   case 0:
 
-    r0 = (globals.display___37085 != null);
+    r0 = (globals.display___40839 != null);
     s.tmp_0 = r0;
     r0 = pxsim_numops_toBoolDecr(s.tmp_0);
     if (!r0) { step = 1; continue; }
     s.tmp_1 = UI_Display_clear__P4610_mk(s);
-    s.tmp_1.arg0 = globals.display___37085;
+    s.tmp_1.arg0 = globals.display___40839;
     s.callLocIdx = 250; s.pc = 3; return s.tmp_1;
   case 3:
     r0 = s.retval;
     s.tmp_0 = UI_Display_draw__P4611_mk(s);
-    s.tmp_0.arg0 = globals.display___37085;
+    s.tmp_0.arg0 = globals.display___40839;
     s.callLocIdx = 251; s.pc = 4; return s.tmp_0;
   case 4:
     r0 = s.retval;
     s.tmp_0 = UI_Display_show__P4612_mk(s);
-    s.tmp_0.arg0 = globals.display___37085;
+    s.tmp_0.arg0 = globals.display___40839;
     s.callLocIdx = 252; s.pc = 5; return s.tmp_0;
   case 5:
     r0 = s.retval;
@@ -2065,12 +2065,12 @@ switch (step) {
     return leave(s, r0)
   default: oops()
 } } }
-UI_inline__P37143.info = {"start":2519,"length":136,"line":80,"column":18,"endLine":86,"endColumn":5,"fileName":"main.ts","functionName":"inline","argumentNames":[]}
+UI_inline__P40897.info = {"start":2408,"length":136,"line":76,"column":18,"endLine":82,"endColumn":5,"fileName":"main.ts","functionName":"inline","argumentNames":[]}
 
-function UI_inline__P37143_mk(s) {
+function UI_inline__P40897_mk(s) {
     checkStack(s.depth);
     return {
-        parent: s, fn: UI_inline__P37143, depth: s.depth + 1,
+        parent: s, fn: UI_inline__P40897, depth: s.depth + 1,
         pc: 0, retval: undefined, r0: undefined, overwrittenPC: false, lambdaArgs: null,
   tmp_0: undefined,
   tmp_1: undefined,
@@ -2276,8 +2276,8 @@ switch (step) {
   case 0:
 
     s.element___7401 = undefined;
-    s.unnamed3170___U1 = undefined;
-    s.unnamed3171___U2 = undefined;
+    s.unnamed3962___U1 = undefined;
+    s.unnamed3963___U2 = undefined;
     if (s.lambdaArgs) {
       s.arg0 = (s.lambdaArgs[0]);
       s.lambdaArgs = null;
@@ -2286,15 +2286,15 @@ switch (step) {
     if (!checkSubtype(r0, UI_Display__C4605_VT)) failedCast(r0);
     s.element___7401 = (undefined);
     r0 = s.arg0.fields["elements"];
-    s.unnamed3170___U1 = (r0);
-    s.unnamed3171___U2 = (0);
+    s.unnamed3962___U1 = (r0);
+    s.unnamed3963___U2 = (0);
   case 1:
-    s.tmp_0 = r0 = s.unnamed3171___U2;
-    r0 = pxsim_Array__length(s.unnamed3170___U1);
+    s.tmp_0 = r0 = s.unnamed3963___U2;
+    r0 = pxsim_Array__length(s.unnamed3962___U1);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 2; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed3170___U1, s.unnamed3171___U2);
+    r0 = pxsim_Array__getAt(s.unnamed3962___U1, s.unnamed3963___U2);
     s.element___7401 = (r0);
     s.tmp_2 = UI_Element__C4615_v0_2_mk(s);
     s.tmp_2.arg0 = s.element___7401;
@@ -2305,11 +2305,11 @@ switch (step) {
     s.pc = 3; return s.tmp_2;
   case 3:
     r0 = s.retval;
-    r0 = (s.unnamed3171___U2 + 1);
-    s.unnamed3171___U2 = (r0);
+    r0 = (s.unnamed3963___U2 + 1);
+    s.unnamed3963___U2 = (r0);
     { step = 1; continue; }
   case 2:
-    s.unnamed3170___U1 = (undefined);
+    s.unnamed3962___U1 = (undefined);
     r0 = undefined;
     return leave(s, r0)
   default: oops()
@@ -2325,8 +2325,8 @@ function UI_Display_draw__P4611_mk(s) {
   tmp_1: undefined,
   tmp_2: undefined,
   element___7401: undefined,
-  unnamed3170___U1: undefined,
-  unnamed3171___U2: undefined,
+  unnamed3962___U1: undefined,
+  unnamed3963___U2: undefined,
   arg0: undefined,
 } }
 
@@ -3890,8 +3890,8 @@ switch (step) {
   case 0:
 
     s.element___7415 = undefined;
-    s.unnamed3172___U1 = undefined;
-    s.unnamed3173___U2 = undefined;
+    s.unnamed3964___U1 = undefined;
+    s.unnamed3965___U2 = undefined;
     if (s.lambdaArgs) {
       s.arg0 = (s.lambdaArgs[0]);
       s.arg1 = (s.lambdaArgs[1]);
@@ -3901,15 +3901,15 @@ switch (step) {
     if (!checkSubtype(r0, UI_Display__C4605_VT)) failedCast(r0);
     s.element___7415 = (undefined);
     r0 = s.arg0.fields["elements"];
-    s.unnamed3172___U1 = (r0);
-    s.unnamed3173___U2 = (0);
+    s.unnamed3964___U1 = (r0);
+    s.unnamed3965___U2 = (0);
   case 1:
-    s.tmp_0 = r0 = s.unnamed3173___U2;
-    r0 = pxsim_Array__length(s.unnamed3172___U1);
+    s.tmp_0 = r0 = s.unnamed3965___U2;
+    r0 = pxsim_Array__length(s.unnamed3964___U1);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 2; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed3172___U1, s.unnamed3173___U2);
+    r0 = pxsim_Array__getAt(s.unnamed3964___U1, s.unnamed3965___U2);
     s.element___7415 = (r0);
     s.tmp_2 = UI_Display_clickedOn__P7372_mk(s);
     s.tmp_2.arg0 = s.arg0;
@@ -3918,11 +3918,11 @@ switch (step) {
     s.callLocIdx = 65; s.pc = 3; return s.tmp_2;
   case 3:
     r0 = s.retval;
-    r0 = (s.unnamed3173___U2 + 1);
-    s.unnamed3173___U2 = (r0);
+    r0 = (s.unnamed3965___U2 + 1);
+    s.unnamed3965___U2 = (r0);
     { step = 1; continue; }
   case 2:
-    s.unnamed3172___U1 = (undefined);
+    s.unnamed3964___U1 = (undefined);
     r0 = undefined;
     return leave(s, r0)
   default: oops()
@@ -3938,8 +3938,8 @@ function UI_Display_clicked__P4613_mk(s) {
   tmp_1: undefined,
   tmp_2: undefined,
   element___7415: undefined,
-  unnamed3172___U1: undefined,
-  unnamed3173___U2: undefined,
+  unnamed3964___U1: undefined,
+  unnamed3965___U2: undefined,
   arg0: undefined,
   arg1: undefined,
 } }
@@ -3960,8 +3960,8 @@ switch (step) {
 
     s.container___7435 = undefined;
     s.child___7438 = undefined;
-    s.unnamed3174___U2 = undefined;
-    s.unnamed3175___U3 = undefined;
+    s.unnamed3966___U2 = undefined;
+    s.unnamed3967___U3 = undefined;
     s.clickable___7449 = undefined;
     if (s.lambdaArgs) {
       s.arg0 = (s.lambdaArgs[0]);
@@ -3979,15 +3979,15 @@ switch (step) {
     s.container___7435 = (s.arg1);
     s.child___7438 = (undefined);
     r0 = s.container___7435.fields["children"];
-    s.unnamed3174___U2 = (r0);
-    s.unnamed3175___U3 = (0);
+    s.unnamed3966___U2 = (r0);
+    s.unnamed3967___U3 = (0);
   case 1:
-    s.tmp_0 = r0 = s.unnamed3175___U3;
-    r0 = pxsim_Array__length(s.unnamed3174___U2);
+    s.tmp_0 = r0 = s.unnamed3967___U3;
+    r0 = pxsim_Array__length(s.unnamed3966___U2);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 2; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed3174___U2, s.unnamed3175___U3);
+    r0 = pxsim_Array__getAt(s.unnamed3966___U2, s.unnamed3967___U3);
     s.child___7438 = (r0);
     s.tmp_2 = UI_Display_clickedOn__P7372_mk(s);
     s.tmp_2.arg0 = s.arg0;
@@ -3997,11 +3997,11 @@ switch (step) {
     s.callLocIdx = 66; s.pc = 11; return s.tmp_2;
   case 11:
     r0 = s.retval;
-    r0 = (s.unnamed3175___U3 + 1);
-    s.unnamed3175___U3 = (r0);
+    r0 = (s.unnamed3967___U3 + 1);
+    s.unnamed3967___U3 = (r0);
     { step = 1; continue; }
   case 2:
-    s.unnamed3174___U2 = (undefined);
+    s.unnamed3966___U2 = (undefined);
   case 3:
   case 4:
     r0 = s.arg1;
@@ -4065,8 +4065,8 @@ function UI_Display_clickedOn__P7372_mk(s) {
   tmp_3: undefined,
   container___7435: undefined,
   child___7438: undefined,
-  unnamed3174___U2: undefined,
-  unnamed3175___U3: undefined,
+  unnamed3966___U2: undefined,
+  unnamed3967___U3: undefined,
   clickable___7449: undefined,
   arg0: undefined,
   arg1: undefined,
@@ -44398,8 +44398,8 @@ switch (step) {
   case 0:
 
     s.child___8699 = undefined;
-    s.unnamed3178___U1 = undefined;
-    s.unnamed3179___U2 = undefined;
+    s.unnamed3970___U1 = undefined;
+    s.unnamed3971___U2 = undefined;
     if (s.lambdaArgs) {
       s.arg0 = (s.lambdaArgs[0]);
       s.arg1 = (s.lambdaArgs[1]);
@@ -44453,15 +44453,15 @@ switch (step) {
   case 2:
     s.child___8699 = (undefined);
     r0 = s.arg0.fields["children"];
-    s.unnamed3178___U1 = (r0);
-    s.unnamed3179___U2 = (0);
+    s.unnamed3970___U1 = (r0);
+    s.unnamed3971___U2 = (0);
   case 3:
-    s.tmp_0 = r0 = s.unnamed3179___U2;
-    r0 = pxsim_Array__length(s.unnamed3178___U1);
+    s.tmp_0 = r0 = s.unnamed3971___U2;
+    r0 = pxsim_Array__length(s.unnamed3970___U1);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 4; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed3178___U1, s.unnamed3179___U2);
+    r0 = pxsim_Array__getAt(s.unnamed3970___U1, s.unnamed3971___U2);
     s.child___8699 = (r0);
     s.tmp_2 = UI_Element__C4615_v0_2_mk(s);
     r0 = s.child___8699.fields["element"];
@@ -44472,11 +44472,11 @@ switch (step) {
     s.pc = 9; return s.tmp_2;
   case 9:
     r0 = s.retval;
-    r0 = (s.unnamed3179___U2 + 1);
-    s.unnamed3179___U2 = (r0);
+    r0 = (s.unnamed3971___U2 + 1);
+    s.unnamed3971___U2 = (r0);
     { step = 3; continue; }
   case 4:
-    s.unnamed3178___U1 = (undefined);
+    s.unnamed3970___U1 = (undefined);
     r0 = undefined;
     return leave(s, r0)
   default: oops()
@@ -44492,8 +44492,8 @@ function UI_Container_draw__P4717_mk(s) {
   tmp_1: undefined,
   tmp_2: undefined,
   child___8699: undefined,
-  unnamed3178___U1: undefined,
-  unnamed3179___U2: undefined,
+  unnamed3970___U1: undefined,
+  unnamed3971___U2: undefined,
   arg0: undefined,
   arg1: undefined,
 } }
@@ -44513,8 +44513,8 @@ switch (step) {
   case 0:
 
     s.child___8669 = undefined;
-    s.unnamed3176___U1 = undefined;
-    s.unnamed3177___U2 = undefined;
+    s.unnamed3968___U1 = undefined;
+    s.unnamed3969___U2 = undefined;
     if (s.lambdaArgs) {
       s.arg0 = (s.lambdaArgs[0]);
       s.lambdaArgs = null;
@@ -44523,15 +44523,15 @@ switch (step) {
     if (!checkSubtype(r0, UI_Container__C4712_VT)) failedCast(r0);
     s.child___8669 = (undefined);
     r0 = s.arg0.fields["children"];
-    s.unnamed3176___U1 = (r0);
-    s.unnamed3177___U2 = (0);
+    s.unnamed3968___U1 = (r0);
+    s.unnamed3969___U2 = (0);
   case 1:
-    s.tmp_0 = r0 = s.unnamed3177___U2;
-    r0 = pxsim_Array__length(s.unnamed3176___U1);
+    s.tmp_0 = r0 = s.unnamed3969___U2;
+    r0 = pxsim_Array__length(s.unnamed3968___U1);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 4; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed3176___U1, s.unnamed3177___U2);
+    r0 = pxsim_Array__getAt(s.unnamed3968___U1, s.unnamed3969___U2);
     s.child___8669 = (r0);
     r0 = s.child___8669;
     r0 = checkSubtype(r0, UI_Container__C4712_VT);
@@ -44547,11 +44547,11 @@ switch (step) {
     r0 = s.retval;
   case 2:
   case 3:
-    r0 = (s.unnamed3177___U2 + 1);
-    s.unnamed3177___U2 = (r0);
+    r0 = (s.unnamed3969___U2 + 1);
+    s.unnamed3969___U2 = (r0);
     { step = 1; continue; }
   case 4:
-    s.unnamed3176___U1 = (undefined);
+    s.unnamed3968___U1 = (undefined);
     r0 = undefined;
     return leave(s, r0)
   default: oops()
@@ -44568,8 +44568,8 @@ function UI_Container_update__P4716_mk(s) {
   tmp_2: undefined,
   tmp_3: undefined,
   child___8669: undefined,
-  unnamed3176___U1: undefined,
-  unnamed3177___U2: undefined,
+  unnamed3968___U1: undefined,
+  unnamed3969___U2: undefined,
   arg0: undefined,
 } }
 
@@ -46472,13 +46472,13 @@ switch (step) {
   case 0:
 
     s.child___8923 = undefined;
-    s.unnamed3184___U1 = undefined;
-    s.unnamed3185___U2 = undefined;
+    s.unnamed3976___U1 = undefined;
+    s.unnamed3977___U2 = undefined;
     s.childSize___8926 = undefined;
     s.offset___8969 = undefined;
     s.child___8976 = undefined;
-    s.unnamed3186___U6 = undefined;
-    s.unnamed3187___U7 = undefined;
+    s.unnamed3978___U6 = undefined;
+    s.unnamed3979___U7 = undefined;
     if (s.lambdaArgs) {
       s.arg0 = (s.lambdaArgs[0]);
       s.lambdaArgs = null;
@@ -46499,15 +46499,15 @@ switch (step) {
     r0 = (s.tmp_0).fields["size"] = (s.tmp_1);
     s.child___8923 = (undefined);
     r0 = s.arg0.fields["children"];
-    s.unnamed3184___U1 = (r0);
-    s.unnamed3185___U2 = (0);
+    s.unnamed3976___U1 = (r0);
+    s.unnamed3977___U2 = (0);
   case 1:
-    s.tmp_0 = r0 = s.unnamed3185___U2;
-    r0 = pxsim_Array__length(s.unnamed3184___U1);
+    s.tmp_0 = r0 = s.unnamed3977___U2;
+    r0 = pxsim_Array__length(s.unnamed3976___U1);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 2; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed3184___U1, s.unnamed3185___U2);
+    r0 = pxsim_Array__getAt(s.unnamed3976___U1, s.unnamed3977___U2);
     s.child___8923 = (r0);
     r0 = pxsim_pxtcore_mkClassInstance(Vector2__C4745_VT);
     s.tmp_2 = r0;
@@ -46611,11 +46611,11 @@ switch (step) {
     r0 = s.retval;
     s.tmp_1 = r0;
     r0 = (s.tmp_0).fields["y"] = (s.tmp_1);
-    r0 = (s.unnamed3185___U2 + 1);
-    s.unnamed3185___U2 = (r0);
+    r0 = (s.unnamed3977___U2 + 1);
+    s.unnamed3977___U2 = (r0);
     { step = 1; continue; }
   case 2:
-    s.unnamed3184___U1 = (undefined);
+    s.unnamed3976___U1 = (undefined);
     r0 = s.arg0.fields["size"];
     r0 = r0.fields["x"];
     s.tmp_1 = r0;
@@ -46625,15 +46625,15 @@ switch (step) {
     s.offset___8969 = (r0);
     s.child___8976 = (undefined);
     r0 = s.arg0.fields["children"];
-    s.unnamed3186___U6 = (r0);
-    s.unnamed3187___U7 = (0);
+    s.unnamed3978___U6 = (r0);
+    s.unnamed3979___U7 = (0);
   case 3:
-    s.tmp_0 = r0 = s.unnamed3187___U7;
-    r0 = pxsim_Array__length(s.unnamed3186___U6);
+    s.tmp_0 = r0 = s.unnamed3979___U7;
+    r0 = pxsim_Array__length(s.unnamed3978___U6);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 8; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed3186___U6, s.unnamed3187___U7);
+    r0 = pxsim_Array__getAt(s.unnamed3978___U6, s.unnamed3979___U7);
     s.child___8976 = (r0);
     s.tmp_2 = r0 = s.offset___8969;
     s.tmp_4 = if_left_1_mk(s);
@@ -46895,11 +46895,11 @@ switch (step) {
     s.tmp_1 = r0;
     r0 = (s.tmp_0 + s.tmp_1);
     s.offset___8969 = (r0);
-    r0 = (s.unnamed3187___U7 + 1);
-    s.unnamed3187___U7 = (r0);
+    r0 = (s.unnamed3979___U7 + 1);
+    s.unnamed3979___U7 = (r0);
     { step = 3; continue; }
   case 8:
-    s.unnamed3186___U6 = (undefined);
+    s.unnamed3978___U6 = (undefined);
     r0 = undefined;
     return leave(s, r0)
   default: oops()
@@ -46930,13 +46930,13 @@ function UI_HorizontalStack_update__P4731_mk(s) {
   tmp_16: undefined,
   tmp_17: undefined,
   child___8923: undefined,
-  unnamed3184___U1: undefined,
-  unnamed3185___U2: undefined,
+  unnamed3976___U1: undefined,
+  unnamed3977___U2: undefined,
   childSize___8926: undefined,
   offset___8969: undefined,
   child___8976: undefined,
-  unnamed3186___U6: undefined,
-  unnamed3187___U7: undefined,
+  unnamed3978___U6: undefined,
+  unnamed3979___U7: undefined,
   arg0: undefined,
 } }
 
@@ -46955,13 +46955,13 @@ switch (step) {
   case 0:
 
     s.child___8737 = undefined;
-    s.unnamed3180___U1 = undefined;
-    s.unnamed3181___U2 = undefined;
+    s.unnamed3972___U1 = undefined;
+    s.unnamed3973___U2 = undefined;
     s.childSize___8740 = undefined;
     s.offset___8783 = undefined;
     s.child___8790 = undefined;
-    s.unnamed3182___U6 = undefined;
-    s.unnamed3183___U7 = undefined;
+    s.unnamed3974___U6 = undefined;
+    s.unnamed3975___U7 = undefined;
     if (s.lambdaArgs) {
       s.arg0 = (s.lambdaArgs[0]);
       s.lambdaArgs = null;
@@ -46982,15 +46982,15 @@ switch (step) {
     r0 = (s.tmp_0).fields["size"] = (s.tmp_1);
     s.child___8737 = (undefined);
     r0 = s.arg0.fields["children"];
-    s.unnamed3180___U1 = (r0);
-    s.unnamed3181___U2 = (0);
+    s.unnamed3972___U1 = (r0);
+    s.unnamed3973___U2 = (0);
   case 1:
-    s.tmp_0 = r0 = s.unnamed3181___U2;
-    r0 = pxsim_Array__length(s.unnamed3180___U1);
+    s.tmp_0 = r0 = s.unnamed3973___U2;
+    r0 = pxsim_Array__length(s.unnamed3972___U1);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 2; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed3180___U1, s.unnamed3181___U2);
+    r0 = pxsim_Array__getAt(s.unnamed3972___U1, s.unnamed3973___U2);
     s.child___8737 = (r0);
     r0 = pxsim_pxtcore_mkClassInstance(Vector2__C4745_VT);
     s.tmp_2 = r0;
@@ -47094,11 +47094,11 @@ switch (step) {
     r0 = (s.tmp_2 + s.tmp_3);
     s.tmp_1 = r0;
     r0 = (s.tmp_0).fields["y"] = (s.tmp_1);
-    r0 = (s.unnamed3181___U2 + 1);
-    s.unnamed3181___U2 = (r0);
+    r0 = (s.unnamed3973___U2 + 1);
+    s.unnamed3973___U2 = (r0);
     { step = 1; continue; }
   case 2:
-    s.unnamed3180___U1 = (undefined);
+    s.unnamed3972___U1 = (undefined);
     r0 = s.arg0.fields["size"];
     r0 = r0.fields["y"];
     s.tmp_1 = r0;
@@ -47108,15 +47108,15 @@ switch (step) {
     s.offset___8783 = (r0);
     s.child___8790 = (undefined);
     r0 = s.arg0.fields["children"];
-    s.unnamed3182___U6 = (r0);
-    s.unnamed3183___U7 = (0);
+    s.unnamed3974___U6 = (r0);
+    s.unnamed3975___U7 = (0);
   case 3:
-    s.tmp_0 = r0 = s.unnamed3183___U7;
-    r0 = pxsim_Array__length(s.unnamed3182___U6);
+    s.tmp_0 = r0 = s.unnamed3975___U7;
+    r0 = pxsim_Array__length(s.unnamed3974___U6);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 8; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed3182___U6, s.unnamed3183___U7);
+    r0 = pxsim_Array__getAt(s.unnamed3974___U6, s.unnamed3975___U7);
     s.child___8790 = (r0);
     s.tmp_2 = r0 = s.offset___8783;
     s.tmp_4 = if_top_1_mk(s);
@@ -47308,11 +47308,11 @@ switch (step) {
     s.tmp_1 = r0;
     r0 = (s.tmp_0 + s.tmp_1);
     s.offset___8783 = (r0);
-    r0 = (s.unnamed3183___U7 + 1);
-    s.unnamed3183___U7 = (r0);
+    r0 = (s.unnamed3975___U7 + 1);
+    s.unnamed3975___U7 = (r0);
     { step = 3; continue; }
   case 8:
-    s.unnamed3182___U6 = (undefined);
+    s.unnamed3974___U6 = (undefined);
     r0 = undefined;
     return leave(s, r0)
   default: oops()
@@ -47341,13 +47341,13 @@ function UI_VerticalStack_update__P4724_mk(s) {
   tmp_14: undefined,
   tmp_15: undefined,
   child___8737: undefined,
-  unnamed3180___U1: undefined,
-  unnamed3181___U2: undefined,
+  unnamed3972___U1: undefined,
+  unnamed3973___U2: undefined,
   childSize___8740: undefined,
   offset___8783: undefined,
   child___8790: undefined,
-  unnamed3182___U6: undefined,
-  unnamed3183___U7: undefined,
+  unnamed3974___U6: undefined,
+  unnamed3975___U7: undefined,
   arg0: undefined,
 } }
 
@@ -47366,11 +47366,11 @@ switch (step) {
   case 0:
 
     s.child___9127 = undefined;
-    s.unnamed3188___U1 = undefined;
-    s.unnamed3189___U2 = undefined;
+    s.unnamed3980___U1 = undefined;
+    s.unnamed3981___U2 = undefined;
     s.child___9167 = undefined;
-    s.unnamed3190___U4 = undefined;
-    s.unnamed3191___U5 = undefined;
+    s.unnamed3982___U4 = undefined;
+    s.unnamed3983___U5 = undefined;
     s.position___9170 = undefined;
     if (s.lambdaArgs) {
       s.arg0 = (s.lambdaArgs[0]);
@@ -47392,15 +47392,15 @@ switch (step) {
     r0 = (s.tmp_0).fields["size"] = (s.tmp_1);
     s.child___9127 = (undefined);
     r0 = s.arg0.fields["children"];
-    s.unnamed3188___U1 = (r0);
-    s.unnamed3189___U2 = (0);
+    s.unnamed3980___U1 = (r0);
+    s.unnamed3981___U2 = (0);
   case 1:
-    s.tmp_0 = r0 = s.unnamed3189___U2;
-    r0 = pxsim_Array__length(s.unnamed3188___U1);
+    s.tmp_0 = r0 = s.unnamed3981___U2;
+    r0 = pxsim_Array__length(s.unnamed3980___U1);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 2; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed3188___U1, s.unnamed3189___U2);
+    r0 = pxsim_Array__getAt(s.unnamed3980___U1, s.unnamed3981___U2);
     s.child___9127 = (r0);
     r0 = pxsim_pxtcore_mkClassInstance(Vector2__C4745_VT);
     s.tmp_2 = r0;
@@ -47498,22 +47498,22 @@ switch (step) {
   case 15:
     r0 = s.retval;
     r0 = (s.arg0).fields["size"] = (s.tmp_2);
-    r0 = (s.unnamed3189___U2 + 1);
-    s.unnamed3189___U2 = (r0);
+    r0 = (s.unnamed3981___U2 + 1);
+    s.unnamed3981___U2 = (r0);
     { step = 1; continue; }
   case 2:
-    s.unnamed3188___U1 = (undefined);
+    s.unnamed3980___U1 = (undefined);
     s.child___9167 = (undefined);
     r0 = s.arg0.fields["children"];
-    s.unnamed3190___U4 = (r0);
-    s.unnamed3191___U5 = (0);
+    s.unnamed3982___U4 = (r0);
+    s.unnamed3983___U5 = (0);
   case 3:
-    s.tmp_0 = r0 = s.unnamed3191___U5;
-    r0 = pxsim_Array__length(s.unnamed3190___U4);
+    s.tmp_0 = r0 = s.unnamed3983___U5;
+    r0 = pxsim_Array__length(s.unnamed3982___U4);
     s.tmp_1 = r0;
     r0 = (s.tmp_0 < s.tmp_1);
     if (!r0) { step = 12; continue; }
-    r0 = pxsim_Array__getAt(s.unnamed3190___U4, s.unnamed3191___U5);
+    r0 = pxsim_Array__getAt(s.unnamed3982___U4, s.unnamed3983___U5);
     s.child___9167 = (r0);
     s.tmp_2 = Vector2_zero__P4749_mk(s);
     s.callLocIdx = 198; s.pc = 22; return s.tmp_2;
@@ -47737,11 +47737,11 @@ switch (step) {
     s.pc = 29; return s.tmp_0;
   case 29:
     r0 = s.retval;
-    r0 = (s.unnamed3191___U5 + 1);
-    s.unnamed3191___U5 = (r0);
+    r0 = (s.unnamed3983___U5 + 1);
+    s.unnamed3983___U5 = (r0);
     { step = 3; continue; }
   case 12:
-    s.unnamed3190___U4 = (undefined);
+    s.unnamed3982___U4 = (undefined);
     r0 = undefined;
     return leave(s, r0)
   default: oops()
@@ -47772,11 +47772,11 @@ function UI_DepthStack_update__P4738_mk(s) {
   tmp_16: undefined,
   tmp_17: undefined,
   child___9127: undefined,
-  unnamed3188___U1: undefined,
-  unnamed3189___U2: undefined,
+  unnamed3980___U1: undefined,
+  unnamed3981___U2: undefined,
   child___9167: undefined,
-  unnamed3190___U4: undefined,
-  unnamed3191___U5: undefined,
+  unnamed3982___U4: undefined,
+  unnamed3983___U5: undefined,
   position___9170: undefined,
   arg0: undefined,
 } }
@@ -51239,7 +51239,7 @@ const sprites_BaseSpriteSayRenderer__C2492_VT = mkVTable({
   },
 });
 
-const breakpoints = setupDebugger(1, ["d___4766","shop___4767","display___37085"])
+const breakpoints = setupDebugger(1, ["d___4766","shop___4767","display___40839"])
 
-return _main___P37669
+return _main___P41610
 })
