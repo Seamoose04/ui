@@ -43,10 +43,6 @@ namespace UI {
         return new HorizontalStack()
     }
 
-    export type Container = DepthStack | VerticalStack | HorizontalStack
-    export type Clickable = Circle | Box | RoundedBox
-    export type Element = Clickable | Container
-
     //% block
     export function AddToContainer(element: Element, container: Container) {
         const contained = new ContainedElement(element)

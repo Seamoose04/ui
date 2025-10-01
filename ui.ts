@@ -84,7 +84,7 @@ namespace UI {
         setOnClick(onClick: (position: Vector2) => void): Element
     }
 
-    class Element implements Position {
+    export class Element implements Position {
         parent: Container
         position: Vector2
         size: Vector2
@@ -107,7 +107,7 @@ namespace UI {
         }
     }
 
-    class Clickable extends Element implements Click {
+    export class Clickable extends Element implements Click {
         clickable: boolean
         onClick: (position: Vector2) => void
 
@@ -632,7 +632,7 @@ namespace UI {
         }
     }
 
-    class Container extends Element {
+    export class Container extends Element {
         children: ContainedElement[]
         shape: Clickable
         constructor() {
