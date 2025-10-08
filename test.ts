@@ -231,6 +231,7 @@ shop.addChild(new UI.ContainedElement(
                         .addChild(new UI.ContainedElement(
                             new UI.ImageElement(assets.image`star`)
                         ))
+                        
                 ))
                 .setShape(
                     new UI.RoundedBox(Vector2.zero, 5, game.Color.LightBlue)

@@ -1,3 +1,8 @@
+/**
+ * Provides an easy to use UI system
+ */
+//% color=190 weight=80 icon="\uf150" block="User Interface"
+//% groups=["Shapes", "Containers", "Display", "Properties", "others"]
 namespace UI {
     export enum AlignmentMethodH {
         CENTER,

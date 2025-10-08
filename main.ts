@@ -4,34 +4,29 @@
 //% color=190 weight=80 icon="\uf150" block="User Interface"
 //% groups=["Shapes", "Containers", "Display", "Properties", "others"]
 namespace UI {
-    //% blockId = create_circle
-    //% block = "create circle radius $radius color $color"
+    //% blockId=ui_create_circle block="create circle radius $radius color $color"
     //% blockSetVariable=circle
+    //% group=Shapes
+    //% weight=30
     export function CreateCircle(radius: number, color: game.Color): Circle {
         return new Circle(radius, color);
     }
 
-    //% blockId = create_box
-    //% block = "create box width $width height $height color $color"
+    //% blockId=ui_create_box block="create box width $width height $height color $color"
     //% blockSetVariable=box
+    //% group=Shapes
+    //% weight=20
     export function CreateBox(width: number, height: number, color: game.Color): Box {
         return new Box(new Vector2(width, height), color)
     }
 
-    //% blockId = create_rounded_box
-    //% block = "create rounded box width $width height $height radius $radius color $color"
+    //% blockId=ui_create_rounded_box block="create rounded box width $width height $height radius $radius color $color"
     //% inlineInputMode = inline
     //% blockSetVariable=rounded_box
+    //% group=Shapes
+    //% weight=10
     export function CreateRoundedBox(width: number, height: number, radius: number, color: game.Color): RoundedBox {
         return new RoundedBox(new Vector2(width, height), radius, color)
-    }
-
-    let display: Display = null
-
-    //% blockId = initialize_ui
-    //% block = "initialize ui"
-    export function InitializeUI() {
-        display = new Display()
     }
 
     export enum StackKind {
@@ -40,9 +35,10 @@ namespace UI {
         Vertical
     }
 
-    //% blockId = create_stack
-    //% block = "create %kind stack"
+    //% blockId=ui_create_stack block="create %kind stack"
     //% blockSetVariable=stack
+    //% group=Containers
+    //% weight=50
     export function CreateStack(kind: StackKind): DepthStack | HorizontalStack | VerticalStack {
         switch (kind) {
             case StackKind.Depth: {
@@ -57,14 +53,24 @@ namespace UI {
         }
     }
 
-    //% blockId = add_to_container
-    //% block = "add element $element to container $container"
-    //% element.shadow="create_circle"
-    //% container.shadow="create_stack"
+    //% blockId=ui_add_to_container block="add $element to $container"
+    //% element.shadow=variables_get
+    //% element.defl=element
+    //% container.shadow=variables_get
+    //% container.defl=container
+    //% group=Containers
+    //% weight=20
     export function AddToContainer(element: Element, container: Container) {
         container.addChild(new ContainedElement(element))
     }
 
+    //% blockId=ui_set_shape block="$container set shape to $shape"
+    //% shape.shadow=variables_get
+    //% shape.defl=shape
+    //% container.shadow=variables_get
+    //% container.defl=container
+    //% group=Containers
+    //% weight=10
     export function SetShape(shape: Clickable, container: Container) {
         container.setShape(shape)
     }
@@ -79,6 +85,15 @@ namespace UI {
 
     export function PositionElement(element: Element, x: number, y: number) {
         element.setPosition(new Vector2(x, y))
+    }
+
+    let display: Display = null
+
+    //% blockId=ui_initialize block="initialize ui"
+    //% group=Display
+    //% weight=100
+    export function Initialize() {
+        display = new Display()
     }
 
     game.onUpdate(() => {
