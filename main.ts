@@ -70,19 +70,34 @@ namespace UI {
     //% container.shadow=variables_get
     //% container.defl=container
     //% group=Containers
-    //% weight=10
+    //% weight=100
     export function SetShape(shape: Clickable, container: Container) {
         container.setShape(shape)
     }
 
+    //% blockId=ui_add_to_screen block="add $element to the screen"
+    //% element.shadow=variables_get
+    //% element.defl=element
+    //% group=Display
+    //% weight=90
     export function AddToScreen(element: Element) {
         display.addElement(element)
     }
 
+    //% blockId=ui_center_element block="center $element"
+    //% element.shadow=variables_get
+    //% element.defl=element
+    //% group=Properties
+    //% weight=100
     export function CenterElement(element: Element) {
         element.setPosition(Display.center)
     }
 
+    //% blockId=ui_position_element block="position $element at x $x y $y"
+    //% element.shadow=variables_get
+    //% element.defl=element
+    //% group=Properties
+    //% weight=99
     export function PositionElement(element: Element, x: number, y: number) {
         element.setPosition(new Vector2(x, y))
     }
