@@ -114,7 +114,7 @@ namespace UI {
         element.setBorder(on)
     }
 
-    //% blockId=ui_set_border block="set $element border thickness $thickness"
+    //% blockId=ui_set_border_thickness block="set $element border thickness $thickness"
     //% element.shadow=variables_get
     //% element.defl=element
     //% thickness.defl=1
@@ -124,7 +124,7 @@ namespace UI {
         element.setBorderWidth(thickness)
     }
 
-    //% blockId=ui_set_border block="set $element border $color"
+    //% blockId=ui_set_border_color block="set $element border $color"
     //% element.shadow=variables_get
     //% element.defl=element
     //% color.shadow=colorNumberPicker
