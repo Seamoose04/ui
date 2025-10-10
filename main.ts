@@ -6,6 +6,7 @@
 namespace UI {
     //% blockId=ui_create_circle block="create circle radius $radius color $color"
     //% blockSetVariable=circle
+    //% color.shadow=colorNumberPicker
     //% group=Shapes
     //% weight=30
     export function CreateCircle(radius: number, color: game.Color): Circle {
@@ -88,7 +89,7 @@ namespace UI {
     //% element.shadow=variables_get
     //% element.defl=element
     //% group=Properties
-    //% weight=100
+    //% weight=95
     export function CenterElement(element: Element) {
         element.setPosition(Display.center)
     }
@@ -97,9 +98,40 @@ namespace UI {
     //% element.shadow=variables_get
     //% element.defl=element
     //% group=Properties
-    //% weight=99
+    //% weight=90
     export function PositionElement(element: Element, x: number, y: number) {
         element.setPosition(new Vector2(x, y))
+    }
+
+    //% blockId=ui_set_border block="set $element border $on"
+    //% element.shadow=variables_get
+    //% element.defl=element
+    //% on.shadow=toggleOnOff
+    //% on.defl=true
+    //% group=Properties
+    //% weight=85
+    export function SetBorder<T extends Border>(element: T, on: boolean) {
+        element.setBorder(on)
+    }
+
+    //% blockId=ui_set_border block="set $element border thickness $thickness"
+    //% element.shadow=variables_get
+    //% element.defl=element
+    //% thickness.defl=1
+    //% group=Properties
+    //% weight=84
+    export function SetBorderThickness<T extends Border>(element: T, thickness: number) {
+        element.setBorderWidth(thickness)
+    }
+
+    //% blockId=ui_set_border block="set $element border $color"
+    //% element.shadow=variables_get
+    //% element.defl=element
+    //% color.shadow=colorNumberPicker
+    //% group=Properties
+    //% weight=83
+    export function SetBorderColor<T extends Border>(element: T, color: number) {
+        element.setBorderColor(color)
     }
 
     let display: Display = null

@@ -61,7 +61,7 @@ namespace UI {
         }
     }
 
-    interface Border {
+    export interface Border {
         border: boolean
         setBorder(on: boolean): Element
         borderColor: color
