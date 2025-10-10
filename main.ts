@@ -9,24 +9,26 @@ namespace UI {
     //% color.shadow=colorNumberPicker
     //% group=Shapes
     //% weight=30
-    export function CreateCircle(radius: number, color: game.Color): Circle {
+    export function CreateCircle(radius: number, color: number): Circle {
         return new Circle(radius, color);
     }
 
     //% blockId=ui_create_box block="create box width $width height $height color $color"
     //% blockSetVariable=box
+    //% color.shadow=colorNumberPicker
     //% group=Shapes
     //% weight=20
-    export function CreateBox(width: number, height: number, color: game.Color): Box {
+    export function CreateBox(width: number, height: number, color: number): Box {
         return new Box(new Vector2(width, height), color)
     }
 
     //% blockId=ui_create_rounded_box block="create rounded box width $width height $height radius $radius color $color"
-    //% inlineInputMode = inline
+    //% inlineInputMode=inline
     //% blockSetVariable=rounded_box
+    //% color.shadow=colorNumberPicker
     //% group=Shapes
     //% weight=10
-    export function CreateRoundedBox(width: number, height: number, radius: number, color: game.Color): RoundedBox {
+    export function CreateRoundedBox(width: number, height: number, radius: number, color: number): RoundedBox {
         return new RoundedBox(new Vector2(width, height), radius, color)
     }
 
