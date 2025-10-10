@@ -6,29 +6,26 @@
 namespace UI {
     //% blockId=ui_create_circle block="create circle radius $radius color $color"
     //% blockSetVariable=circle
-    //% color.shadow=colorNumberPicker
     //% group=Shapes
     //% weight=30
-    export function CreateCircle(radius: number, color: number): Circle {
+    export function CreateCircle(radius: number, color: game.Color): Circle {
         return new Circle(radius, color);
     }
 
     //% blockId=ui_create_box block="create box width $width height $height color $color"
     //% blockSetVariable=box
-    //% color.shadow=colorNumberPicker
     //% group=Shapes
     //% weight=20
-    export function CreateBox(width: number, height: number, color: number): Box {
+    export function CreateBox(width: number, height: number, color: game.Color): Box {
         return new Box(new Vector2(width, height), color)
     }
 
     //% blockId=ui_create_rounded_box block="create rounded box width $width height $height radius $radius color $color"
     //% inlineInputMode=inline
     //% blockSetVariable=rounded_box
-    //% color.shadow=colorNumberPicker
     //% group=Shapes
     //% weight=10
-    export function CreateRoundedBox(width: number, height: number, radius: number, color: number): RoundedBox {
+    export function CreateRoundedBox(width: number, height: number, radius: number, color: game.Color): RoundedBox {
         return new RoundedBox(new Vector2(width, height), radius, color)
     }
 
@@ -129,10 +126,9 @@ namespace UI {
     //% blockId=ui_set_border_color block="set $element border $color"
     //% element.shadow=variables_get
     //% element.defl=element
-    //% color.shadow=colorNumberPicker
     //% group=Properties
     //% weight=83
-    export function SetBorderColor<T extends Border>(element: T, color: number) {
+    export function SetBorderColor<T extends Border>(element: T, color: game.Color) {
         element.setBorderColor(color)
     }
 
