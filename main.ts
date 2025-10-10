@@ -2,7 +2,7 @@
  * Provides an easy to use UI system
  */
 //% color=190 weight=80 icon="\uf150" block="User Interface"
-//% groups=["Shapes", "Containers", "Display", "Properties", "others"]
+//% groups=["Shapes", "Containers", "Contained Elements", "Display", "Properties", "others"]
 namespace UI {
     //% blockId=ui_create_circle block="create circle radius $radius color $color"
     //% blockSetVariable=circle
@@ -54,14 +54,17 @@ namespace UI {
     }
 
     //% blockId=ui_add_to_container block="add $element to $container"
+    //% blockSetVariable=contained
     //% element.shadow=variables_get
     //% element.defl=element
     //% container.shadow=variables_get
     //% container.defl=container
     //% group=Containers
     //% weight=20
-    export function AddToContainer(element: Element, container: Container) {
-        container.addChild(new ContainedElement(element))
+    export function AddToContainer(element: Element, container: Container): ContainedElement {
+        const contained = new ContainedElement(element)
+        container.addChild(contained)
+        return contained
     }
 
     //% blockId=ui_set_shape block="$container set shape to $shape"
@@ -126,10 +129,54 @@ namespace UI {
     //% blockId=ui_set_border_color block="set $element border $color"
     //% element.shadow=variables_get
     //% element.defl=element
-    //% group=Properties
+    //% group="Properties"
     //% weight=83
     export function SetBorderColor<T extends Border>(element: T, color: game.Color) {
         element.setBorderColor(color)
+    }
+
+    //% blockId=ui_set_all_padding block="set $element border $padding"
+    //% element.shadow=variables_get
+    //% element.defl=element
+    //% padding.defl=2
+    //% group="Contained Elements"
+    //% weight=83
+    export function SetAllPadding(element: ContainedElement, padding: number) {
+        element.setPadding(padding)
+    }
+
+    //% blockId=ui_set_h_padding block="set $element horizontal padding $padding"
+    //% element.shadow=variables_get
+    //% element.defl=contained
+    //% padding.defl=2
+    //% group="Contained Elements"
+    export function SetHPadding(element: ContainedElement, padding: number) {
+        element.setPadH(padding)
+    }
+
+    //% blockId=ui_set_v_padding block="set $element vertical padding $padding"
+    //% element.shadow=variables_get
+    //% element.defl=contained
+    //% padding.defl=2
+    //% group="Contained Elements"
+    export function SetVPadding(element: ContainedElement, padding: number) {
+        element.setPadV(padding)
+    }
+
+    //% blockId=ui_set_padding block="set $element vertical padding $padding"
+    //% inlineInputMode=inline
+    //% element.shadow=variables_get
+    //% element.defl=contained
+    //% top.defl=2
+    //% bottom.defl=2
+    //% left.defl=2
+    //% right.defl=2
+    //% group="Contained Elements"
+    export function SetPadding(element: ContainedElement, top: number, bottom: number, left: number, right: number) {
+        element.setPadTop(top)
+        element.setPadBottom(bottom)
+        element.setPadLeft(left)
+        element.setPadRight(right)
     }
 
     let display: Display = null

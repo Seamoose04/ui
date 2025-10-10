@@ -567,12 +567,12 @@ namespace UI {
         }
     }
 
-    interface Alignment {
+    export interface Alignment {
         h: AlignmentMethodH
         v: AlignmentMethodV
     }
 
-    interface Padding {
+    export interface Padding {
         left: number
         right: number
         top: number
