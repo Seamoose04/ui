@@ -59,8 +59,8 @@ namespace UI {
     //% element.defl=element
     //% container.shadow=variables_get
     //% container.defl=container
-    //% group=Containers
-    //% weight=20
+    //% group="Contained Elements"
+    //% weight=100
     export function AddToContainer(element: Element, container: Container): ContainedElement {
         const contained = new ContainedElement(element)
         container.addChild(contained)
@@ -140,7 +140,7 @@ namespace UI {
     //% element.defl=contained
     //% padding.defl=2
     //% group="Contained Elements"
-    //% weight=83
+    //% weight=90
     export function SetAllPadding(element: ContainedElement, padding: number) {
         element.setPadding(padding)
     }
@@ -150,6 +150,7 @@ namespace UI {
     //% element.defl=contained
     //% padding.defl=2
     //% group="Contained Elements"
+    //% weight=89
     export function SetHPadding(element: ContainedElement, padding: number) {
         element.setPadH(padding)
     }
@@ -159,6 +160,7 @@ namespace UI {
     //% element.defl=contained
     //% padding.defl=2
     //% group="Contained Elements"
+    //% weight=87
     export function SetVPadding(element: ContainedElement, padding: number) {
         element.setPadV(padding)
     }
@@ -172,6 +174,7 @@ namespace UI {
     //% left.defl=2
     //% right.defl=2
     //% group="Contained Elements"
+    //% weight=86
     export function SetPadding(element: ContainedElement, top: number, bottom: number, left: number, right: number) {
         element.setPadTop(top)
         element.setPadBottom(bottom)
