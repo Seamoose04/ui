@@ -135,9 +135,9 @@ namespace UI {
         element.setBorderColor(color)
     }
 
-    //% blockId=ui_set_all_padding block="set $element border $padding"
+    //% blockId=ui_set_all_padding block="set $element all padding $padding"
     //% element.shadow=variables_get
-    //% element.defl=element
+    //% element.defl=contained
     //% padding.defl=2
     //% group="Contained Elements"
     //% weight=83
@@ -163,7 +163,7 @@ namespace UI {
         element.setPadV(padding)
     }
 
-    //% blockId=ui_set_padding block="set $element vertical padding $padding"
+    //% blockId=ui_set_padding block="set $element padding top $top bottom $bottom left $left right $right"
     //% inlineInputMode=inline
     //% element.shadow=variables_get
     //% element.defl=contained
