@@ -196,6 +196,9 @@ namespace UI {
     //% element.defl=contained
     //% group="Contained Elements"
     //% weight=79
+    export function SetHorizontalAlign(element: ContainedElement, align: AlignmentMethodH) {
+        element.setAlignH(align)
+    }
 
     let display: Display = null
 
