@@ -182,22 +182,14 @@ namespace UI {
         element.setPadRight(right)
     }
 
-    //% blockId=ui_set_v_align block="set $element vertical alignment $align"
+    //% blockId=ui_set_v_align block="set $element alignment horizontal $horizontal vertical $vertical"
     //% element.shadow=variables_get
     //% element.defl=contained
     //% group="Contained Elements"
     //% weight=80
-    export function SetVerticalAlign(element: ContainedElement, align: AlignmentMethodV) {
-        element.setAlignV(align)
-    }
-
-    //% blockId=ui_set_h_align block="set $element horizontal alignment $align"
-    //% element.shadow=variables_get
-    //% element.defl=contained
-    //% group="Contained Elements"
-    //% weight=79
-    export function SetHorizontalAlign(element: ContainedElement, align: AlignmentMethodH) {
-        element.setAlignH(align)
+    export function SetAlignment(element: ContainedElement, horizontal: AlignmentMethodH, vertical: AlignmentMethodV) {
+        element.setAlignH(horizontal)
+        element.setAlignV(vertical)
     }
 
     let display: Display = null
