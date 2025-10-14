@@ -38,7 +38,7 @@ namespace UI {
     //% blockId=ui_create_stack block="create %kind stack"
     //% blockSetVariable=stack
     //% group=Containers
-    //% weight=50
+    //% weight=100
     export function CreateStack(kind: StackKind): DepthStack | HorizontalStack | VerticalStack {
         switch (kind) {
             case StackKind.Depth: {
@@ -73,7 +73,7 @@ namespace UI {
     //% container.shadow=variables_get
     //% container.defl=container
     //% group=Containers
-    //% weight=100
+    //% weight=50
     export function SetShape(shape: Clickable, container: Container) {
         container.setShape(shape)
     }
@@ -160,7 +160,7 @@ namespace UI {
     //% element.defl=contained
     //% padding.defl=2
     //% group="Contained Elements"
-    //% weight=87
+    //% weight=88
     export function SetVPadding(element: ContainedElement, padding: number) {
         element.setPadV(padding)
     }
@@ -174,13 +174,28 @@ namespace UI {
     //% left.defl=2
     //% right.defl=2
     //% group="Contained Elements"
-    //% weight=86
+    //% weight=87
     export function SetPadding(element: ContainedElement, top: number, bottom: number, left: number, right: number) {
         element.setPadTop(top)
         element.setPadBottom(bottom)
         element.setPadLeft(left)
         element.setPadRight(right)
     }
+
+    //% blockId=ui_set_v_align block="set $element vertical alignment $align"
+    //% element.shadow=variables_get
+    //% element.defl=contained
+    //% group="Contained Elements"
+    //% weight=80
+    export function SetVerticalAlign(element: ContainedElement, align: AlignmentMethodV) {
+        element.setAlignV(align)
+    }
+
+    //% blockId=ui_set_h_align block="set $element horizontal alignment $align"
+    //% element.shadow=variables_get
+    //% element.defl=contained
+    //% group="Contained Elements"
+    //% weight=79
 
     let display: Display = null
 
