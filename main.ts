@@ -29,6 +29,8 @@ namespace UI {
         return new RoundedBox(new Vector2(width, height), radius, color)
     }
 
+    //% blockId=ui_create_image block="create image element"
+
     export enum StackKind {
         Depth,
         Horizontal,
@@ -182,7 +184,7 @@ namespace UI {
         element.setPadRight(right)
     }
 
-    //% blockId=ui_set_v_align block="set $element alignment horizontal $horizontal vertical $vertical"
+    //% blockId=ui_set_align block="set $element alignment horizontal $horizontal vertical $vertical"
     //% element.shadow=variables_get
     //% element.defl=contained
     //% group="Contained Elements"
