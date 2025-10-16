@@ -30,6 +30,7 @@ namespace UI {
     }
 
     //% blockId=ui_create_image block="create image element $img"
+    //% img.shadow=screen_image_picker
     //% blockSetVariable=img_element
     //% group=Elements
     //% weight=30
