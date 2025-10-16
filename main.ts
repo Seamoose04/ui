@@ -2,20 +2,20 @@
  * Provides an easy to use UI system
  */
 //% color=190 weight=80 icon="\uf150" block="User Interface"
-//% groups=["Shapes", "Containers", "Contained Elements", "Display", "Properties", "others"]
+//% groups=["Elements", "Containers", "Contained Elements", "Display", "Properties", "others"]
 namespace UI {
     //% blockId=ui_create_circle block="create circle radius $radius color $color"
     //% blockSetVariable=circle
-    //% group=Shapes
-    //% weight=30
+    //% group=Elements
+    //% weight=80
     export function CreateCircle(radius: number, color: game.Color): Circle {
         return new Circle(radius, color);
     }
 
     //% blockId=ui_create_box block="create box width $width height $height color $color"
     //% blockSetVariable=box
-    //% group=Shapes
-    //% weight=20
+    //% group=Elements
+    //% weight=70
     export function CreateBox(width: number, height: number, color: game.Color): Box {
         return new Box(new Vector2(width, height), color)
     }
@@ -23,13 +23,19 @@ namespace UI {
     //% blockId=ui_create_rounded_box block="create rounded box width $width height $height radius $radius color $color"
     //% inlineInputMode=inline
     //% blockSetVariable=rounded_box
-    //% group=Shapes
-    //% weight=10
+    //% group=Elements
+    //% weight=60
     export function CreateRoundedBox(width: number, height: number, radius: number, color: game.Color): RoundedBox {
         return new RoundedBox(new Vector2(width, height), radius, color)
     }
 
-    //% blockId=ui_create_image block="create image element"
+    //% blockId=ui_create_image block="create image element $img"
+    //% blockSetVariable=img_element
+    //% group=Elements
+    //% weight=30
+    export function CreateImgElement(img: Image): ImageElement {
+        return new ImageElement(img)
+    }
 
     export enum StackKind {
         Depth,
