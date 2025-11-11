@@ -1,5 +1,10 @@
 // tests go here; this will not be compiled when this package is used as an extension.
 const d = new UI.Display()
+const b = new UI.Box(new Vector2(160, 120), game.Color.White).setPosition(new Vector2(80, 60))
+const t = new UI.TextElement("the quick brown fox jumps over the lazy dog", 10).setPosition(new Vector2(80, 60))
+t.setTextAlignMode(UI.TextAlignMode.Center)
+d.addElement(b)
+d.addElement(t)
 
 // --------------------------------
 
@@ -206,49 +211,49 @@ const d = new UI.Display()
 
 // -------------------------------
 
-const shop = new UI.DepthStack().setShape(
-        new UI.RoundedBox(
-            Vector2.zero, 8, game.Color.Teal
-        ).setBorderColor(
-            game.Color.LightBlue
-        ).setBorderWidth(
-            2
-        )
-    )
+// const shop = new UI.DepthStack().setShape(
+//         new UI.RoundedBox(
+//             Vector2.zero, 8, game.Color.Teal
+//         ).setBorderColor(
+//             game.Color.LightBlue
+//         ).setBorderWidth(
+//             2
+//         )
+//     )
 
-shop.setPosition(new Vector2(80, 60))
-shop.addChild(new UI.ContainedElement(
-    new UI.VerticalStack()
-        .addChild(new UI.ContainedElement(
-            new UI.DepthStack()
-                .addChild(new UI.ContainedElement(
-                    new UI.HorizontalStack()
-                        .addChild(new UI.ContainedElement(
-                            new UI.TextElement(
-                                "Ninja Star: "
-                            ).setTextAlignMode(UI.TextAlignMode.Center)
-                        ))
-                        .addChild(new UI.ContainedElement(
-                            new UI.ImageElement(assets.image`star`)
-                        ))
+// shop.setPosition(new Vector2(80, 60))
+// shop.addChild(new UI.ContainedElement(
+//     new UI.VerticalStack()
+//         .addChild(new UI.ContainedElement(
+//             new UI.DepthStack()
+//                 .addChild(new UI.ContainedElement(
+//                     new UI.HorizontalStack()
+//                         .addChild(new UI.ContainedElement(
+//                             new UI.TextElement(
+//                                 "Ninja Star: "
+//                             ).setTextAlignMode(UI.TextAlignMode.Center)
+//                         ))
+//                         .addChild(new UI.ContainedElement(
+//                             new UI.ImageElement(assets.image`star`)
+//                         ))
                         
-                ))
-                .setShape(
-                    new UI.RoundedBox(Vector2.zero, 5, game.Color.LightBlue)
-                )
-        ))
-        .addChild(new UI.ContainedElement(
-            new UI.TextElement(
-                "  This ninja star belonged to the ancient senseis... Who used their power to defeat the evil guys, or something...",
-            ).setWidth(
-                100
-            ).setTextSize(
-                UI.FontSize.Small
-            )
-        ))
-))
+//                 ))
+//                 .setShape(
+//                     new UI.RoundedBox(Vector2.zero, 5, game.Color.LightBlue)
+//                 )
+//         ))
+//         .addChild(new UI.ContainedElement(
+//             new UI.TextElement(
+//                 "  This ninja star belonged to the ancient senseis... Who used their power to defeat the evil guys, or something...",
+//             ).setWidth(
+//                 100
+//             ).setTextSize(
+//                 UI.FontSize.Small
+//             )
+//         ))
+// ))
 
-d.addElement(shop)
+// d.addElement(shop)
 
 browserEvents.MouseLeft.onEvent(browserEvents.MouseButtonEvent.Pressed, function (x: number, y: number) {
     d.clicked(new Vector2(x, y))

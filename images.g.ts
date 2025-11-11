@@ -83,6 +83,60 @@ e d d f d d f d d e
 . 6 6 6 f f 6 6 6 . 
 . 6 6 6 f f 6 6 6 . 
 `;
+            case "image7":
+            case "Letters":return img`
+fffffffff.fffffffff.ffffffffffffffff...ffffff
+f...ff...ff....f...ff....f....f....f...f..f..
+f...fffff.f....f...fffff.ffff.f..fffffff..f..
+ffffff...ff....f...ff....f....f...ff...f..f..
+f...fffff.fffffffff.ffffff....ffffff...ffffff
+...fff...ff....f...ff...f.fff.ffff.fffffffff.
+....ff..f.f....ff.ffff..ff...ff...ff...ff...f
+....ffff..f....f.f.ff.f.ff...fffff.f...fffff.
+f...ff..f.f....f...ff..fff...ff....ffffff...f
+ffffff...fffffff...ff...f.fff.f......f..f...f
+fffffffffff...ff...ff...ff...ff...ffffff.....
+f......f..f...ff...ff...f.f.f.f...f...f......
+fffff..f..f...f.f.f.f.f.f..f...f.f...f.......
+....f..f..f...f.f.f.f.f.f.f.f...f...f........
+fffff..f..fffff..f...f.f.f...f..f..fffff.....
+`;
+            case "image8":
+            case "Numbers":return img`
+f f f f f . . f . . f f f f . f f f f f f . . . . 
+f . . f f . f f . . . . . . f . . . . f f . . . . 
+f . f . f . . f . . . f f f . . f f f . f . f . . 
+f f . . f . . f . . f . . . . . . . . f f f f f f 
+f f f f f . f f f . f f f f f f f f f f . . f . . 
+f f f f f f f f f f f f f f f f f f f f f f f f f 
+f . . . . f . . . . . . . . f f . . . f f . . . f 
+f f f f . f f f f f . . . f . f f f f f f f f f f 
+. . . . f f . . . f . . f . . f . . . f . . . . f 
+f f f f . f f f f f . . f . . f f f f f f f f f f 
+`;
+            case "image9":
+            case "Symbols":return img`
+...f...........f...f.......f....ff.
+...f......fffff...f..f.f...f....f..
+..f..............f...f.f.fffff..f..
+.f........fffff.f..........f....f..
+.f.............f...f.......f....ff.
+...........f.f..ff..fffff......ff..
+......f.f.ffffff....f...f.......f..
+fffff..f...f.f..ff.ff.fff.......f..
+......f.f.ffffff..f.f...........f..
+...........f.f..ff.fffffffffff.ff..
+...f..f..............ff....f.......
+..f....f............f..f...f.....f.
+..f....f..............f....f..f.f.f
+..f....f....f..................f...
+...f..f.....f....f....f....f.......
+..ff..ff.....f..f.....f........f...
+..f....f....f....f...f.f........f..
+.ff....ff..f......f................
+..f....f....f....f.................
+..ff..ff.....f..f..................
+`;
         }
         return null;
     })

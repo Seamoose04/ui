@@ -31,11 +31,20 @@ namespace UI {
 
     //% blockId=ui_create_image block="create image element $img"
     //% img.shadow=screen_image_picker
-    //% blockSetVariable=img_element
+    //% blockSetVariable=image_element
     //% group=Elements
     //% weight=30
     export function CreateImgElement(img: Image): ImageElement {
         return new ImageElement(img)
+    }
+
+    //% blockId=ui_create_text block="create text element $text which is $charsWide characters wide"
+    //% charsWide.defl=10
+    //% blockSetVariable=text_element
+    //% group=Elements
+    //% weight=40
+    export function CreateTextElement(text: string, charsWide: number): TextElement {
+        return new TextElement(text, charsWide)
     }
 
     export enum StackKind {

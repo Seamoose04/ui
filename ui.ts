@@ -144,98 +144,154 @@ namespace UI {
     }
     export class TextElement extends Element {
         text: string
-        color: color
-        fontSize: FontSize
         textAlign: TextAlignMode
-        wrap: boolean
-        
-        constructor(text: string, color?: color) {
+        charWide: number
+
+        constructor(text: string, charWide: number) {
             super(Vector2.zero)
-            this.color = color ? color : game.Color.Black
-            this.fontSize = FontSize.Medium
             this.textAlign = TextAlignMode.Left
+            this.charWide = charWide
             this.setText(text)
-            this.setSize(Vector2.multiply(TextElement.textGridSize(this.text), TextElement.sizeOfChar(this.fontSize)))
         }
 
-        private get font(): image.Font {
-            switch (this.fontSize) {
-                case FontSize.Small: {
-                    return image.font5
-                    break
+        public static layoutText(text: string, maxCharWide: number): string[] {
+            let chunksLeft = text.split(" ")
+            let line = ""
+            let layout: string[] = []
+            while (chunksLeft.length > 0) {
+                const nextChunk = chunksLeft.removeAt(0).trim()
+                if (line.length + nextChunk.length < maxCharWide) {
+                    line = (line == "") ? nextChunk : [line, nextChunk].join(" ")
+                    continue
                 }
-                case FontSize.Medium: {
-                    return image.font8
-                    break
+                if (line == "") {
+                    layout.push(nextChunk.slice(0, maxCharWide - 1))
+                    chunksLeft.insertAt(0, nextChunk.slice(maxCharWide))
+                    continue
                 }
-                case FontSize.Large: {
-                    return image.font12
-                    break
-                }
+                layout.push(line)
+                line = nextChunk
+            }
+            if (line != "") {
+                layout.push(line)
+            }
+            return layout
+        }
+
+        private static drawTextLine(img: Image, text: string, offset: Vector2): void {
+            const chars = text.split("")
+            for (let i = 0; i < chars.length; i++) {
+                this.drawChar(img, chars[i], Vector2.add(offset, new Vector2(i * 6, 0)))
             }
         }
 
-        private static textGridSize(text: string): Vector2 {
-            let rows = text.split("\n")
-            let maxRow = rows.reduce((max: number, current: string) => {
-                return Math.max(max, current.length)
-            }, 0)
-            return new Vector2(maxRow, rows.length)
-        }
-
-        private static sizeOfChar(fontSize: FontSize): Vector2 {
-            let gridSize = Vector2.zero
-            switch (fontSize) {
-                case FontSize.Small: {
-                    gridSize.x = 6
-                    gridSize.y = 6
-                    break
-                }
-                case FontSize.Medium: {
-                    gridSize.x = 6
-                    gridSize.y = 8
-                    break
-                }
-                case FontSize.Large: {
-                    gridSize.x = 12
-                    gridSize.y = 14
-                    break
-                }
+        private static drawChar(img: Image, char: string, offset: Vector2): void {
+            if (char.length > 1) {
+                console.error("Thats too many characters!")
+                return
             }
-            return gridSize
+            const chars = [
+                "abcdefghi",
+                "jklmnopqr",
+                "stuvwxyz "
+            ]
+            const nums = [
+                "01234",
+                "56789"
+            ]
+            const symbols = [
+                `/ =%"+[`,
+                "-*#&@_]",
+                "(),.?!~",
+                "{}<>^ '"
+            ]
+            char = char.toLowerCase()
+            if (chars.join().indexOf(char) >= 0) {
+                let charLocation = Vector2.zero
+                for (let i = 0; i < chars.length; i++) {
+                    const idx = chars[i].indexOf(char)
+                    if (idx >= 0) {
+                        charLocation.x = idx
+                        charLocation.y = i
+                        break
+                    }
+                }
+                img.blit(
+                    offset.x, offset.y, 5, 5,
+                    assets.image`Letters`,
+                    charLocation.x * 5, charLocation.y * 5, 5, 5,
+                    true, false
+                )
+                return
+            }
+            if (nums.join().indexOf(char) >= 0) {
+                let charLocation = Vector2.zero
+                for (let i = 0; i < nums.length; i++) {
+                    const idx = nums[i].indexOf(char)
+                    if (idx >= 0) {
+                        charLocation.x = idx
+                        charLocation.y = i
+                        break
+                    }
+                }
+                img.blit(
+                    offset.x, offset.y, 5, 5,
+                    assets.image`Numbers`,
+                    charLocation.x * 5, charLocation.y * 5, 5, 5,
+                    true, false
+                )
+                return
+            }
+            if (symbols.join().indexOf(char) >= 0) {
+                let charLocation = Vector2.zero
+                for (let i = 0; i < symbols.length; i++) {
+                    const idx = symbols[i].indexOf(char)
+                    if (idx >= 0) {
+                        charLocation.x = idx
+                        charLocation.y = i
+                        break
+                    }
+                }
+                img.blit(
+                    offset.x, offset.y, 5, 5,
+                    assets.image`Symbols`,
+                    charLocation.x * 5, charLocation.y * 5, 5, 5,
+                    true, false
+                )
+                return
+            }
         }
 
         draw(ctx: Image): void {
-            const textGridSize = TextElement.textGridSize(this.text)
+            const textGrid = TextElement.layoutText(this.text, this.charWide)
 
-            let offset = Vector2.add(this.position, Vector2.scale(this.size, -1/2))
+            let position = Vector2.add(this.position, Vector2.scale(this.size, -1/2))
 
-            const sizeOfChar = TextElement.sizeOfChar(this.fontSize)
-            const splitText = this.text.split("\n")
+            const sizeOfChar = new Vector2(6, 6)
 
             switch (this.textAlign) {
                 case TextAlignMode.Left: {
-                    for (let row = 0; row < textGridSize.y; row++) {
-                        const pos = Vector2.add(offset, new Vector2(0, row * sizeOfChar.y))
-                        ctx.print(splitText[row], pos.x, pos.y, this.color, this.font)
+                    for (let line of textGrid) {
+                        TextElement.drawTextLine(ctx, line, position)
+                        position.add(new Vector2(0, 6))
                     }
                     break
                 }
                 case TextAlignMode.Center: {
-                    let width = textGridSize.x * sizeOfChar.x
-                    for (let row = 0; row < textGridSize.y; row++) {
-                        const rowWidth = splitText[row].length * sizeOfChar.x
-                        const pos = Vector2.add(offset, new Vector2((width-rowWidth) / 2, row * sizeOfChar.y))
-                        ctx.print(splitText[row], pos.x, pos.y, this.color, this.font)
+                    for (let line of textGrid) {
+                        let offset = new Vector2(this.charWide - line.length, 0)
+                        offset.scale(6 / 2)
+                        TextElement.drawTextLine(ctx, line, Vector2.add(position, offset))
+                        position.add(new Vector2(0, 6))
                     }
                     break
                 }
                 case TextAlignMode.Right: {
-                    let width = textGridSize.x * sizeOfChar.x
-                    for (let row = 0; row < textGridSize.y; row++) {
-                        const rowWidth = splitText[row].length * sizeOfChar.x
-                        const pos = Vector2.add(offset, new Vector2(width - rowWidth, row * sizeOfChar.y))
-                        ctx.print(splitText[row], pos.x, pos.y, this.color, this.font)
+                    for (let line of textGrid) {
+                        let offset = new Vector2(this.charWide - line.length, 0)
+                        offset.scale(6)
+                        TextElement.drawTextLine(ctx, line, Vector2.add(position, offset))
+                        position.add(new Vector2(0, 6))
                     }
                     break
                 }
@@ -244,32 +300,12 @@ namespace UI {
 
         setText(text: string): TextElement {
             this.text = text
-            this.setSize(Vector2.multiply(TextElement.textGridSize(this.text), TextElement.sizeOfChar(this.fontSize)))
-            return this
-        }
-
-        setTextSize(size: FontSize): TextElement {
-            this.fontSize = size
-            this.setSize(Vector2.multiply(TextElement.textGridSize(this.text), TextElement.sizeOfChar(this.fontSize)))
+            this.setSize(Vector2.scale(new Vector2(this.charWide, TextElement.layoutText(this.text, this.charWide).length), 6))
             return this
         }
 
         setTextAlignMode(mode: TextAlignMode): TextElement {
             this.textAlign = mode
-            return this
-        }
-
-        setWidth(width: number): TextElement {
-            let lines: string[] = []
-            let lastLine = this.text.split(" ").reduce((currentLine, word) => {
-                if (currentLine.concat(word).length * TextElement.sizeOfChar(this.fontSize).x <= width) {
-                    return currentLine.concat(`${word} `)
-                } else {
-                    lines.push(currentLine)
-                    return word
-                }
-            }, "")
-            this.setText(lines.join("\n").concat("\n").concat(lastLine))
             return this
         }
 
