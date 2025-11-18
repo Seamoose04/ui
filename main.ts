@@ -153,6 +153,15 @@ namespace UI {
         element.setBorderColor(color)
     }
 
+    //% blockId=ui_set_text_align_method block="set $element text alignment mode $mode"
+    //% element.shadow=variables_get
+    //% element.defl=text_element
+    //% group="Properties"
+    //% weight=80
+    export function SetTextAlignMode(element: TextElement, mode: TextAlignMode) {
+        element.setTextAlignMode(mode)
+    }
+
     //% blockId=ui_set_all_padding block="set $element all padding $padding"
     //% element.shadow=variables_get
     //% element.defl=contained
