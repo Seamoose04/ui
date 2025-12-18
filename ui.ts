@@ -517,6 +517,11 @@ namespace UI {
             this.clickable = true
             return this
         }
+
+        setRadius(radius: number): Circle {
+            this.radius = radius
+            return this.setSize(new Vector2(this.radius * 2, this.radius * 2))
+        }
     }
 
     export class RoundedBox extends Box {
