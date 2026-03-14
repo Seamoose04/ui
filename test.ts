@@ -245,10 +245,6 @@ d.elements.push(vs)
 
 // d.addElement(shop)
 
-browserEvents.MouseLeft.onEvent(browserEvents.MouseButtonEvent.Pressed, function (x: number, y: number) {
-    d.clicked(new Vector2(x, y))
-})
-
 game.onUpdate(() => {
     d.clear()
     d.draw()
