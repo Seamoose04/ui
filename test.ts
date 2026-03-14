@@ -1,71 +1,61 @@
 // tests go here; this will not be compiled when this package is used as an extension.
+function makeMinus(): UI.ContainedElement {
+    const minus = new UI.DepthStack()
+    minus.addChild(new UI.ContainedElement(
+        new UI.Circle(6)
+            .setBorder(true)
+            .setBorderWidth(1)
+            .setBorderColor(game.Color.Black)
+            .setColor(game.Color.Red)
+            .setOnClick((position: Vector2) => {
+                vs.children.removeAt(1)
+                if (vs.children.length == 1) {
+                    
+                }
+            })
+    ))
+    minus.addChild(new UI.ContainedElement(
+        new UI.ImageElement(assets.image`minus_icon`)
+    ))
+    return new UI.ContainedElement(minus).setPadding(3).setPadTop(1)
+}
+function makePlus(): UI.ContainedElement {
+    const plus = new UI.DepthStack()
+    plus.addChild(new UI.ContainedElement(
+        new UI.Circle(6)
+            .setBorder(true)
+            .setBorderWidth(1)
+            .setBorderColor(game.Color.Black)
+            .setColor(game.Color.Green)
+            .setOnClick((position: Vector2) => {
+                if (vs.children.length > 1) {
+                    vs.children.insertAt(1, new UI.ContainedElement(new UI.Circle(4, game.Color.Pink)).setPadding(1))
+                } else {
+                    let minus = makeMinus()
+                    vs.addChild(minus)
+                }
+            })
+    ))
+    plus.addChild(new UI.ContainedElement(
+        new UI.ImageElement(assets.image`plus_icon`)
+    ))
+    return new UI.ContainedElement(plus).setPadding(3).setPadBottom(1)
+}
+
 const d = new UI.Display()
-const b = new UI.Box(new Vector2(160, 120), game.Color.White).setPosition(new Vector2(80, 60))
-const t = new UI.TextElement("the quick brown fox jumps over the lazy dog", 10).setPosition(new Vector2(80, 60))
-t.setTextAlignMode(UI.TextAlignMode.Center)
-d.addElement(b)
-d.addElement(t)
+const vs = new UI.VerticalStack().setPosition(UI.Display.center)
 
-// --------------------------------
+const plus = makePlus()
 
-// const vs = new UI.VerticalStack(UI.Display.center)
-//     .setPositionMethod(UI.PositionMethod.CENTER)
-//     .setSpacing(5)
-
-// const plus = new UI.DepthStack(Vector2.zero)
-//     .setPositionMethod(UI.PositionMethod.CENTER)
-// new UI.Circle(Vector2.zero, 6)
-//     .setBorder(true)
-//     .setBorderWidth(1)
-//     .setBorderColor(game.Color.Black)
-//     .setColor(game.Color.Green)
-//     .setOnClick((position: Vector2) => {
-//         if (vs.children.length > 1) {
-//             vs.children.insertAt(1, new UI.Circle(Vector2.zero, 4, game.Color.Pink))
-//         } else {
-//             let minus = new UI.DepthStack(Vector2.zero)
-//                 .setPositionMethod(UI.PositionMethod.CENTER)
-//             new UI.Circle(Vector2.zero, 6)
-//                 .setBorder(true)
-//                 .setBorderWidth(1)
-//                 .setBorderColor(game.Color.Black)
-//                 .setColor(game.Color.Red)
-//                 .setOnClick((position: Vector2) => {
-//                     vs.children.removeAt(1)
-//                 })
-//                 .setParent(minus)
-//             new UI.ImageElement(Vector2.zero, assets.image`minus_icon`)
-//                 .setParent(minus)
-//             vs.addChild(minus)
-//         }
-//     })
-//     .setParent(plus)
-// new UI.ImageElement(Vector2.zero, assets.image`plus_icon`)
-//     .setParent(plus)
-
-// const minus = new UI.DepthStack(Vector2.zero)
-//     .setPositionMethod(UI.PositionMethod.CENTER)
-// new UI.Circle(Vector2.zero, 6)
-//     .setBorder(true)
-//     .setBorderWidth(1)
-//     .setBorderColor(game.Color.Black)
-//     .setColor(game.Color.Red)
-//     .setOnClick((position: Vector2) => {
-//         vs.children.removeAt(1)
-//     })
-//     .setParent(minus)
-// new UI.ImageElement(Vector2.zero, assets.image`minus_icon`)
-//     .setParent(minus)
-
-// vs.addChild(plus).update()
-// vs.addChild(minus).update()
-// vs.setShape(
-//     new UI.RoundedBox(vs.position, vs.size, 10, game.Color.LightBlue)
-//         .setBorder(true)
-//         .setBorderColor(game.Color.Purple)
-//         .setBorderWidth(2)
-// )
-// d.elements.push(vs)
+vs.addChild(plus)
+vs.addChild(makeMinus())
+vs.setShape(
+    new UI.RoundedBox(vs.size, 10, game.Color.LightBlue)
+    .setBorder(true)
+    .setBorderColor(game.Color.Purple)
+    .setBorderWidth(2)
+)
+d.elements.push(vs)
 
 // --------------------------------
 

@@ -38,13 +38,14 @@ namespace UI {
         return new ImageElement(img)
     }
 
-    //% blockId=ui_create_text block="create text element $text which is $charsWide characters wide"
+    //% blockId=ui_create_text block="create text element $text of color $color which is $charsWide characters wide"
     //% charsWide.defl=10
+    //% color.defl=15
     //% blockSetVariable=text_element
     //% group=Elements
     //% weight=40
-    export function CreateTextElement(text: string, charsWide: number): TextElement {
-        return new TextElement(text, charsWide)
+    export function CreateTextElement(text: string, charsWide: number, color: game.Color): TextElement {
+        return new TextElement(text, charsWide, color)
     }
 
     export enum StackKind {

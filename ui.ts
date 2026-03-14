@@ -146,12 +146,14 @@ namespace UI {
         text: string
         textAlign: TextAlignMode
         charWide: number
+        color: color
 
-        constructor(text: string, charWide: number) {
+        constructor(text: string, charWide: number, color?: color) {
             super(Vector2.zero)
             this.textAlign = TextAlignMode.Left
             this.charWide = charWide
             this.setText(text)
+            this.color = color ? color : game.Color.Black
         }
 
         public static layoutText(text: string, maxCharWide: number): string[] {
@@ -178,14 +180,14 @@ namespace UI {
             return layout
         }
 
-        private static drawTextLine(img: Image, text: string, offset: Vector2): void {
+        private static drawTextLine(img: Image, text: string, offset: Vector2, color: color): void {
             const chars = text.split("")
             for (let i = 0; i < chars.length; i++) {
-                this.drawChar(img, chars[i], Vector2.add(offset, new Vector2(i * 6, 0)))
+                this.drawChar(img, chars[i], Vector2.add(offset, new Vector2(i * 6, 0)), color)
             }
         }
 
-        private static drawChar(img: Image, char: string, offset: Vector2): void {
+        private static drawChar(img: Image, char: string, offset: Vector2, color: color): void {
             if (char.length > 1) {
                 console.error("Thats too many characters!")
                 return
@@ -199,7 +201,7 @@ namespace UI {
                 "01234",
                 "56789"
             ]
-            const symbols = [
+            const syms = [
                 `/ =%"+[`,
                 "-*#&@_]",
                 "(),.?!~",
@@ -216,9 +218,11 @@ namespace UI {
                         break
                     }
                 }
+                const letters = assets.image`Letters`
+                letters.replace(game.Color.Black, color)
                 img.blit(
                     offset.x, offset.y, 5, 5,
-                    assets.image`Letters`,
+                    letters,
                     charLocation.x * 5, charLocation.y * 5, 5, 5,
                     true, false
                 )
@@ -234,27 +238,31 @@ namespace UI {
                         break
                     }
                 }
+                const numbers = assets.image`Numbers`
+                numbers.replace(game.Color.Black, color)
                 img.blit(
                     offset.x, offset.y, 5, 5,
-                    assets.image`Numbers`,
+                    numbers,
                     charLocation.x * 5, charLocation.y * 5, 5, 5,
                     true, false
                 )
                 return
             }
-            if (symbols.join().indexOf(char) >= 0) {
+            if (syms.join().indexOf(char) >= 0) {
                 let charLocation = Vector2.zero
-                for (let i = 0; i < symbols.length; i++) {
-                    const idx = symbols[i].indexOf(char)
+                for (let i = 0; i < syms.length; i++) {
+                    const idx = syms[i].indexOf(char)
                     if (idx >= 0) {
                         charLocation.x = idx
                         charLocation.y = i
                         break
                     }
                 }
+                const symbols = assets.image`Symbols`
+                symbols.replace(game.Color.Black, color)
                 img.blit(
                     offset.x, offset.y, 5, 5,
-                    assets.image`Symbols`,
+                    symbols,
                     charLocation.x * 5, charLocation.y * 5, 5, 5,
                     true, false
                 )
@@ -272,7 +280,7 @@ namespace UI {
             switch (this.textAlign) {
                 case TextAlignMode.Left: {
                     for (let line of textGrid) {
-                        TextElement.drawTextLine(ctx, line, position)
+                        TextElement.drawTextLine(ctx, line, position, this.color)
                         position.add(new Vector2(0, 6))
                     }
                     break
@@ -281,7 +289,7 @@ namespace UI {
                     for (let line of textGrid) {
                         let offset = new Vector2(this.charWide - line.length, 0)
                         offset.scale(6 / 2)
-                        TextElement.drawTextLine(ctx, line, Vector2.add(position, offset))
+                        TextElement.drawTextLine(ctx, line, Vector2.add(position, offset), this.color)
                         position.add(new Vector2(0, 6))
                     }
                     break
@@ -290,7 +298,7 @@ namespace UI {
                     for (let line of textGrid) {
                         let offset = new Vector2(this.charWide - line.length, 0)
                         offset.scale(6)
-                        TextElement.drawTextLine(ctx, line, Vector2.add(position, offset))
+                        TextElement.drawTextLine(ctx, line, Vector2.add(position, offset), this.color)
                         position.add(new Vector2(0, 6))
                     }
                     break
